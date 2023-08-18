@@ -1,0 +1,6 @@
+[book]
+title = "RusPintos Documentation"
+authors = ["RusPintos Developers"]
+
+src = "src"
+lang = "en"
