@@ -1,4 +1,4 @@
-# First Instruction
+# First instruction
 
 The goal of this section is to execute one instruction on QEMU. With the support of modern OS, we can readily compile an executable and ask the OS to load it - but now no one is there to help us. We will need to 
 craft a binary file and feed it to QEMU.
