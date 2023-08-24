@@ -1,4 +1,4 @@
-# Baby steps
+# Hello, world!
 
 Now we are ready to write an OS from scratch! Initialize an empty project:
 ```shell
