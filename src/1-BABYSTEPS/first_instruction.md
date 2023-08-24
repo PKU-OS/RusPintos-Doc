@@ -22,7 +22,7 @@ $ cargo build --target riscv64gc-unknown-none-elf
     Finished dev [unoptimized + debuginfo] target(s) in 0.20s
 ```
 
-At this point, we have generated a object file with empty content. Now let's try to add our first instruction:
+At this point, we have generated an object file with empty content. Now let's try to add our first instruction:
 
 File: src/main.rs
 ```rust
@@ -32,7 +32,7 @@ core::arch::global_asm! {r#"
 "#}
 ```
 
-We have created a new section to hold our dummy instruction, but it could be located anywhere. [Linker script](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_chapter/ld_3.html) is a standard way to customize binary layout. Let's put this instruction to an address where QEMU is able to find:
+Here, we create a new section to hold our dummy instruction, but it could be located anywhere. [Linker script](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_chapter/ld_3.html) is a standard way to customize binary layout. Let's put this instruction to an address where QEMU is able to find:
 
 File: src/linker.ld
 ```
