@@ -16,7 +16,9 @@
 
   - [First instruction](1-HELLOWORLD/first_instruction.md)
 
-  - [Debugging](1-HELLOWORLD/debugging.md)
+  - [First function](1-HELLOWORLD/first_function.md)
+
+  - [SBI support](1-HELLOWORLD/sbi_support.md)
 
 - [Memory](2-MEMORY.md)
 
