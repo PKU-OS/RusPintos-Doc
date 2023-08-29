@@ -1,6 +1,7 @@
 [book]
 title = "RusPintos Documentation"
 authors = ["RusPintos Developers"]
+default-theme = "Rust"
 
 src = "src"
 lang = "en"
