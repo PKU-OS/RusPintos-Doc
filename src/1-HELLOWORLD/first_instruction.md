@@ -3,7 +3,7 @@
 The goal of this section is to execute one instruction on QEMU. With the support of modern OS, we can readily compile an executable and ask the OS to load it - but now no one is there to help us. We will need to 
 craft a binary file and feed it to QEMU.
 
-By default, `rustc` compiles with a lot of extra OS-dependent things, and giving us a binary that can only be understood by the current platform. These stuff are called `std` - Rust Standard Library. We need to have full control of the binary we are generating, including where should the entry point be. Fortunately, `rustc` permits this with the `no_std` and `no_main` global attributes, along with a dummy panic handler:
+By default, `rustc` compiles with a lot of extra OS-dependent things, and giving us a binary that can only be understood by the current platform. These stuff are called `std` - Rust Standard Library, and we can't use any of them on a bare metal system. Also, we need to have full control of the binary we are generating, including where should the entry point be. Fortunately, `rustc` permits this with the `no_std` and `no_main` global attributes, along with a empty panic handler:
 
 File: src/main.rs
 ```rust
@@ -46,7 +46,7 @@ SECTIONS
 }
 ```
 
-QEMU's physical address starts at `0x80000000`, and at that address, there's a small code snippet that comes with it - Supervisor Binary Interface (SBI). It is responsible for setting up the machine and providing basic services. In the linker script, the load address `0x80200000` works because we know the size of SBI will not exceed it.
+QEMU's physical address starts at `0x80000000`, and at that address, there's a small code snippet that comes with it - Supervisor Binary Interface (SBI). It is responsible for setting up the machine and providing basic services, and we will back it up [later](sbi_support.md). In the linker script, the load address `0x80200000` works because we know the size of SBI will not exceed it.
 
 Now we can compile our instruction with the linker script
 
@@ -54,7 +54,7 @@ Now we can compile our instruction with the linker script
 RUSTFLAGS=-Clink-arg=-Tsrc/linker.ld cargo build --target riscv64gc-unknown-none-elf
 ```
 
-and ask QEMU to load and simulate the generated target on virtual machine
+and ask QEMU to load and simulate the generated target on a virtual machine
 
 ```shell
 qemu-system-riscv64 -nographic -machine virt -kernel target/riscv64gc-unknown-none-elf/debug/rus_pintos
