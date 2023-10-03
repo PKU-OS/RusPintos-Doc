@@ -3,6 +3,8 @@
 The goal of this section is to execute one instruction on QEMU. With the support of modern OS, we can readily compile an executable and ask the OS to load it - but now no one is there to help us. We will need to 
 craft a binary file and feed it to QEMU.
 
+## [no_std]-ifying it
+
 By default, `rustc` compiles with a lot of extra OS-dependent things, and giving us a binary that can only be understood by the current platform. These stuff are called `std` - Rust Standard Library, and we can't use any of them on a bare metal system. Also, we need to have full control of the binary we are generating, including where should the entry point be. Fortunately, `rustc` permits this with the `no_std` and `no_main` global attributes, along with a empty panic handler:
 
 File: src/main.rs
@@ -22,17 +24,21 @@ $ cargo build --target riscv64gc-unknown-none-elf
     Finished dev [unoptimized + debuginfo] target(s) in 0.20s
 ```
 
-At this point, we have generated an object file with empty content. Now let's try to add our first instruction:
+At this point, we have generated an object file with empty content. Now let's try to add our first instruction by injecting some assembly into the source file:
 
 File: src/main.rs
 ```rust
 core::arch::global_asm! {r#"
-    .section .text.entry
+    .section .text
         addi x0, x1, 42
 "#}
 ```
 
-Here, we create a new section to hold our dummy instruction, but it could be located anywhere. [Linker script](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_chapter/ld_3.html) is a standard way to customize binary layout. Let's put this instruction to an address where QEMU is able to find:
+## Linking by hand
+
+We have no idea where the `.text` section is located. If an OS exists, it could read the output object file and determine the `_entry` point. But on a bare metal system, we have to manually design the layout of the whole codebase such that the hardware can just treat it as an unstructured binary and go ahead executing whatever is on the upfront.
+
+[Linker script](https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_chapter/ld_3.html) is a standard way to customize binary layout. We can specify the address of each section we created in the source files. Let's put this instruction to where QEMU is able to find:
 
 File: src/linker.ld
 ```
@@ -41,10 +47,12 @@ OUTPUT_ARCH(riscv)
 SECTIONS
 {
     . = 0x0000000080200000;
-    .entry : { *(.text.entry) }
+    .entry : { *(.text) }
     /DISCARD/ : { *(.eh_frame) }
 }
 ```
+
+Just to clearify, the section `.text` and the segment `.entry` is arbitrarily named - call them whever you want as long as the names are consistent in the source file and linker script.
 
 QEMU's physical address starts at `0x80000000`, and at that address, there's a small code snippet that comes with it - Supervisor Binary Interface (SBI). It is responsible for setting up the machine and providing basic services, and we will back it up [later](sbi_support.md). In the linker script, the load address `0x80200000` works because we know the size of SBI will not exceed it.
 
@@ -113,7 +121,7 @@ Boot HART MEDELEG         : 0x0000000000f0b509
 
 ```
 
-We don't want to type this everytime, so we put it down and we can go with `cargo run` afterwards:
+We don't want to type this everytime, so let's put it down and we can go with `cargo run` afterwards:
 
 File: .cargo/config.toml
 ```toml
@@ -124,3 +132,7 @@ target = "riscv64gc-unknown-none-elf"
 rustflags = ["-Clink-arg=-Tsrc/linker.ld"]
 runner = "qemu-system-riscv64 -nographic -machine virt -kernel"
 ```
+
+## Why it "halts"?
+
+It's not actually halting. Since we've only loaded one instruction, the rest of the memory is uninitialized - and very likely to contain invalid instructions. Even if we are lucky and not encountering invalid instructions, the memory is small and the program counter will soon go out of the boundary. In whichever case, we are in trouble and SBI will take over control and try resetting everything - and the above loop goes over and over again.
