@@ -3,7 +3,7 @@
 The goal of this section is to execute one instruction on QEMU. With the support of modern OS, we can readily compile an executable and ask the OS to load it - but now no one is there to help us. We will need to 
 craft a binary file and feed it to QEMU.
 
-## [no_std]-ifying it
+## [no_std]-ifying
 
 By default, `rustc` compiles with a lot of extra OS-dependent things, and giving us a binary that can only be understood by the current platform. These stuff are called `std` - Rust Standard Library, and we can't use any of them on a bare metal system. Also, we need to have full control of the binary we are generating, including where should the entry point be. Fortunately, `rustc` permits this with the `#![no_std]` and `#![no_main]` global attributes, along with a empty panic handler:
 
