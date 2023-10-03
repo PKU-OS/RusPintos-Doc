@@ -20,8 +20,6 @@
 
   - [SBI support](1-HELLOWORLD/sbi_support.md)
 
-  - [Debugging](1-HELLOWORLD/debugging.md)
-
 - [Memory](2-MEMORY.md)
 
   - [Kernel layout](2-MEMORY/kernel_layout.md)
@@ -61,3 +59,9 @@
 - [System call](7-SYSTEMCALL.md)
 
 - [VM swapping](8-VMSWAPPING.md)
+
+---
+
+# APPENDIX
+
+- [Debugging](9-DEBUGGING.md)
