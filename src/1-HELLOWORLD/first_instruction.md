@@ -13,7 +13,7 @@ File: src/main.rs
 #![no_main]
 
 #[panic_handler]
-fn panic(_: &core::panic::PanicInfo) -> ! { loop {} }
+fn panic(_: &panic::PanicInfo) -> ! { loop {} }
 ```
 
 That actually compiles, provided that we have the right target:
@@ -28,7 +28,7 @@ At this point, we have generated an object file with empty content. Now let's tr
 
 File: src/main.rs
 ```rust
-core::arch::global_asm! {r#"
+arch::global_asm! {r#"
     .section .text
         addi x0, x1, 42
 "#}

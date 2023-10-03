@@ -11,7 +11,7 @@ File: src/main.rs
 #[no_mangle]
 extern "C" fn main() -> ! { loop {} }
 
-core::arch::global_asm! {r#"
+arch::global_asm! {r#"
     .section .text.entry
         li sp, 0x80400000
         j main
@@ -61,7 +61,7 @@ impl Iterator for Fib {
     }
 }
 
-core::arch::global_asm! {r#"
+arch::global_asm! {r#"
     .section .text.entry
         li sp, 0x80400000
         j main
@@ -104,7 +104,7 @@ extern "C" {
 #[no_mangle]
 extern "C" fn main() -> ! {
 
-    unsafe { core::ptr::write_bytes(sbss as *mut u8, 0, ebss as usize - sbss as usize) };
+    unsafe { ptr::write_bytes(sbss as *mut u8, 0, ebss as usize - sbss as usize) };
 
     ...
 }
