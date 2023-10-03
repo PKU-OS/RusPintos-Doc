@@ -5,7 +5,7 @@ craft a binary file and feed it to QEMU.
 
 ## [no_std]-ifying it
 
-By default, `rustc` compiles with a lot of extra OS-dependent things, and giving us a binary that can only be understood by the current platform. These stuff are called `std` - Rust Standard Library, and we can't use any of them on a bare metal system. Also, we need to have full control of the binary we are generating, including where should the entry point be. Fortunately, `rustc` permits this with the `no_std` and `no_main` global attributes, along with a empty panic handler:
+By default, `rustc` compiles with a lot of extra OS-dependent things, and giving us a binary that can only be understood by the current platform. These stuff are called `std` - Rust Standard Library, and we can't use any of them on a bare metal system. Also, we need to have full control of the binary we are generating, including where should the entry point be. Fortunately, `rustc` permits this with the `#![no_std]` and `#![no_main]` global attributes, along with a empty panic handler:
 
 File: src/main.rs
 ```rust
