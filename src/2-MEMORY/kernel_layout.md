@@ -16,7 +16,7 @@ Below shows typical memory layout for a running kernel:
                               │         KERNEL         │    │         KERNEL         │
                               │                        │    │                        │
                               ├────────────────────────┤    ├────────────────────────┤  0xFFFFFFC080000000
-                              ·                        ·    ·                        ·
+                              ·                        ·    │                        │
 ┌────────────────────────┐    ·                        ·    │                        │
 │                        │    ·                        ·    │                        │
 │          PAGE          │    ·                        ·    │                        │
@@ -34,6 +34,13 @@ Below shows typical memory layout for a running kernel:
 ├────────────────────────┤    ├────────────────────────┤    ·                        ·  0x10001000
 ·                        ·    ·                        ·    ·                        ·
 └────────────────────────┘    └────────────────────────┘    └────────────────────────┘  0x0
+```
+
+File: src/mem.rs
+```rust
+pub const PM_BASE: usize = 0x80000000;
+pub const VM_BASE: usize = 0xFFFFFFC080000000;
+pub const VM_OFFSET: usize = VM_BASE - PM_BASE;
 ```
 
 ## Move the kernel
