@@ -13,7 +13,7 @@ File: src/main.rs
 #![no_main]
 
 #[panic_handler]
-fn panic(_: &panic::PanicInfo) -> ! { loop {} }
+fn panic(_: &core::panic::PanicInfo) -> ! { loop {} }
 ```
 
 That actually compiles, provided that we have the right target:
@@ -28,8 +28,11 @@ At this point, we have generated an object file with empty content. Now let's tr
 
 File: src/main.rs
 ```rust
-arch::global_asm! {r#"
+core::arch::global_asm! {r#"
     .section .text
+
+    globl _start
+    _start:
         addi x0, x1, 42
 "#}
 ```
@@ -47,12 +50,12 @@ OUTPUT_ARCH(riscv)
 SECTIONS
 {
     . = 0x0000000080200000;
-    .entry : { *(.text) }
+    .text : { *(.text) }
     /DISCARD/ : { *(.eh_frame) }
 }
 ```
 
-Just to clearify, the section `.text` and the segment `.entry` is arbitrarily named - call them whever you want as long as the names are consistent in the source file and linker script.
+Just to clearify, the section and segment `.text` are arbitrarily named - call them whever you want as long as the names are consistent in the source file and linker script.
 
 QEMU's physical address starts at `0x80000000`, and at that address, there's a small code snippet that comes with it - Supervisor Binary Interface (SBI). It is responsible for setting up the machine and providing basic services, and we will back it up [later](sbi_support.md). In the linker script, the load address `0x80200000` works because we know the size of SBI will not exceed it.
 

@@ -10,25 +10,23 @@ Supervisor Binary Interface (SBI) provides us with a limited but out-of-box inte
 
 We will not cover the tedious [calling specification](https://github.com/riscv-non-isa/riscv-sbi-doc/blob/master/riscv-sbi.adoc) here, and provide a macro that just does the job:
 
-File: src/sbi.rs
+File: src/macros.rs
 ```rust
-macro_rules! call {
+macro_rules! sbi_call {
 
-/* ---------------------------------- V0.1 ---------------------------------- */
+    // v0.1
+    ( $eid: expr; $($args: expr),* ) => { sbi_call!($eid, 0; $($args),*).0 };
 
-    ( $eid: expr; $($args: expr),* ) => { call!($eid, 0; $($args),*).0 };
-
-/* ---------------------------------- V0.2 ---------------------------------- */
-
-    ( $eid: expr, $fid: expr; $($arg0: expr $(, $arg1: expr $(, $arg2: expr $(, $arg3: expr $(, $arg4: expr $(, $arg5: expr)?)?)?)?)?)? ) => {
+    // v0.2
+    ( $eid: expr, $fid: expr; $($arg0: expr $(, $arg1: expr )?)? ) => {
         {
             let (err, ret): (usize, usize);
             unsafe {
-                arch::asm!("ecall",
+                core::arch::asm!("ecall",
                     in("a7") $eid, lateout("a0") err,
                     in("a6") $fid, lateout("a1") ret,
 
-                  $(in("a0") $arg0, $(in("a1") $arg1, $(in("a2") $arg2, $(in("a3") $arg3, $(in("a4") $arg4, $(in("a5") $arg5)?)?)?)?)?)?
+                  $(in("a0") $arg0, $(in("a1") $arg1)?)?
                 );
             }
 
@@ -38,29 +36,12 @@ macro_rules! call {
 }
 ```
 
-Built on that, we have some useful wrapper functions:
+Built on that, now the machine can power off gracefully. (Remember the simulator halts everytime? Now it terminates itself!)
 
 File: src/sbi.rs
 ```rust
-const SET_TIMER: usize = 0x00;
-const CONSOLE_PUTCHAR: usize = 0x01;
-const CONSOLE_GETCHAR: usize = 0x02;
-const SHUTDOWN: usize = 0x08;
-
-pub fn set_timer(timer: usize) {
-    call!(SET_TIMER; timer);
-}
-
-pub fn console_putchar(char: usize) {
-    call!(CONSOLE_PUTCHAR; char);
-}
-
-pub fn console_getchar() -> usize {
-    call!(CONSOLE_GETCHAR;)
-}
-
 pub fn shutdown() -> ! {
-    call!(SHUTDOWN;);
+    sbi_call!(0x08;);
     unreachable!()
 }
 ```
@@ -71,37 +52,48 @@ Time to write our own output using the above SBI calls! Our own implementation o
 
 File: src/sbi/console.rs
 ```rust
-struct Kout;
-impl Write for Kout {
-    fn write_str(&mut self, string: &str) -> fmt::Result {
+pub struct Kout;
+impl core::fmt::Write for Kout {
+    fn write_str(&mut self, string: &str) -> core::fmt::Result {
         for char in string.chars() {
-            console_putchar(char as usize);
+            sbi_call!(0x01; char as usize);
         }
         Ok(())
     }
 }
+```
 
-pub fn print(args: fmt::Arguments) {
-    Kout.write_fmt(args).unwrap();
+File: src/macros.rs
+```rust
+macro_rules! kprint {
+    ($($arg:tt)*) => {{
+        use core::fmt::Write;
+        drop(write!($crate::sbi::Kout, $($arg)*));
+    }};
 }
 
-macro_rules! printk {
-    ($fmt: literal $(, $arg: expr)*) => {
-        $crate::sbi::console::print(format_args!(concat!("[{:012.2}] ", $fmt, "\n"), $crate::sbi::timer::time_us() $(, $arg)*));
-    }
+macro_rules! kprintln {
+    () => { kprint("\n") };
+    ($($arg:tt)*) => {
+        kprint!($($arg)*);
+        kprint!("\n");
+    };
 }
 ```
 
-Putting them all together, let's say hello to the world and then gracefully exit:
+Putting them all together, let's say hello to the world and then gracefully shut down the machine:
 
 File: src/main.rs
 ```rust
 #[macro_use]
-pub mod sbi;
+mod macros;
+
+mod mem;
+mod sbi;
 
 #[no_mangle]
 fn main() -> ! {
-    printk!("Hello, World!");
+    kprintln!("Hello, World!");
     sbi::shutdown()
 }
 
