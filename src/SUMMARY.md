@@ -30,9 +30,9 @@
 
 - [Kernel thread](3-kernelthread.md)
 
-  - [Thread creation](3-kernelthread/thread_creation.md)
+  - [Review](3-kernelthread/review.md)
 
-  - [Interruption](3-kernelthread/interruption.md)
+  - [Member](3-kernelthread/member.md)
 
   - [Thread scheduler](3-kernelthread/thread_scheduler.md)
 
