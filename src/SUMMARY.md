@@ -30,7 +30,7 @@
 
 - [Kernel thread](3-kernelthread.md)
 
-  - [Review](3-kernelthread/review.md)
+  - [Introduction](3-kernelthread/introduction.md)
 
   - [Member](3-kernelthread/member.md)
 
