@@ -54,11 +54,11 @@
 
 - [Lab](lab.md)
 
-  - [Schedulers](lab-1-schedulers.md)
+  - [Schedulers](lab1-schedulers.md)
 
-  - [System call](lab-2-systemcall.md)
+  - [User Programs](lab2-userprograms.md)
 
-  - [VM swapping](lab-3-vmswapping.md)
+  - [VM swapping](lab3-vmswapping.md)
 
 ---
 
