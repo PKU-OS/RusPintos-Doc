@@ -13,7 +13,7 @@ calls, through which user programs can interact with the OS.
 
 You may build project 2 on top of your project 1 submission or you can start fresh. No code from project 1 is necessary for this assignment. The "alarm clock" functionality may be useful in projects 3 and 4, but it is not strictly required.
 
-You might find it helpful to review how to run tests (Read about [Debugging](appendix/debugging.md)).
+It might be helpful to review how to run tests (Read about [Debugging](appendix/debugging.md)).
 
 The following sections provide detailed information about this project.
 
