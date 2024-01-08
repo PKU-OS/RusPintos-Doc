@@ -1,23 +1,13 @@
 # User Programs
 
-<!-- todo -->
-> Due: xxxx/xx/xx
+```admonish warning title="Submission"
+Due: xxxx/xx/xx
+```
 
-You've implemented great threading features into the kernel of TacOS. That's quite an achievement.
-In this part, you will take care of both the kernel and user programs, supporting a variety of user
-programs to run on TacOS.
+Welcome to Project User Programs! You've built great threading features into the TacOS. That's quite an achievement. This project will have you implement essential syscalls, supporting user programs to run properly on TacOS.
 
-As the skeleton code already supports loading and running user programs, however, user programs
-are unable to perform any I/O actions. Therefore, you are going to implement some substantial system
-calls, through which user programs can interact with the OS.
+At the moment, the kernel can only load and run simple user programs that do nothing. In order to run more powerful user programs, you are going to implement essential syscalls, for example, enpowering user programs to perform I/O actions, spawning and synchronizing with child processes, and managing files just like what you might do in Linux.
 
-You may build project 2 on top of your project 1 submission or you can start fresh. No code from project 1 is necessary for this assignment. The "alarm clock" functionality may be useful in projects 3 and 4, but it is not strictly required.
+It's _not required_ to complete this assignment on top of the last one, which means you can start from the skeleton code. However, it's still suggested to continue with your previous work so that you can end up having an almost full-featured OS.
 
-It might be helpful to review how to run tests (Read about [Debugging](appendix/debugging.md)).
-
-The following sections provide detailed information about this project.
-
-<!-- todo -->
-- 1
-- 2
-- 3
+<!-- Todo: Introduce kernel functionalities (fs, page table, ...) and how to use them in a stand-alone chapter. -->
