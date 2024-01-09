@@ -57,6 +57,8 @@
 
   - [Tasks](lab2-userprograms/tasks.md)
 
+  - [Testing](lab2-userprograms/testing.md)
+
 - [VM swapping](lab3-vmswapping.md)
 
 # APPENDIX
