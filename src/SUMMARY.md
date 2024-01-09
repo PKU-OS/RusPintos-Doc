@@ -2,13 +2,12 @@
 
 [Introduction](introduction.md)
 
----
+<!-- separators are not rendered correctly -->
+<!-- --- -->
 
 # ENVIRONMENT
 
 - [Install toolchain](environment/install_toolchain.md)
-
----
 
 # DOCUMENTATION
 
@@ -50,17 +49,17 @@
 
   - [Virtual memory](5-userprogram/virtual_memory.md)
 
----
+# PROJECTS
 
-- [Lab](lab.md)
+- [Schedulers](lab1-schedulers.md)
 
-  - [Schedulers](lab-1-schedulers.md)
+- [User Programs](lab2-userprograms.md)
 
-  - [System call](lab-2-systemcall.md)
+  - [Tasks](lab2-userprograms/tasks.md)
 
-  - [VM swapping](lab-3-vmswapping.md)
+  - [Testing](lab2-userprograms/testing.md)
 
----
+- [VM swapping](lab3-vmswapping.md)
 
 # APPENDIX
 
