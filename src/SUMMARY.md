@@ -39,7 +39,9 @@
 
 - [File system](4-filesystem.md)
 
-  - [Device tree](4-filesystem/device_tree.md)
+  - [Boot with device](4-filesystem/boot_with_device.md)
+
+  - [Design a file system](4-filesystem/design_file_system.md)
 
 - [User program](5-userprogram.md)
 
