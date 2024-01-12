@@ -53,7 +53,7 @@
 
 - [Schedulers](lab1-schedulers.md)
   
-  - [Tasks](lab1-schedulers/Tasks.md)
+  - [Tasks](lab1-schedulers/tasks.md)
 
   <!-- TODO - [Suggestions](lab1-schedulers/suggestions.md) -->
 
