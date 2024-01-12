@@ -63,4 +63,5 @@
 
 # APPENDIX
 
+- [Testing](appendix/testing.md)
 - [Debugging](appendix/debugging.md)
