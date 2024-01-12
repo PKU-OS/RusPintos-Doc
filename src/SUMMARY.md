@@ -55,8 +55,6 @@
   
   - [Tasks](lab1-schedulers/tasks.md)
 
-  <!-- TODO - [Suggestions](lab1-schedulers/suggestions.md) -->
-
   - [Testing](lab1-schedulers/testing.md)
 
 - [User Programs](lab2-userprograms.md)
