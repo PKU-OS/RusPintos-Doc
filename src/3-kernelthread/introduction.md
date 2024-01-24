@@ -2,9 +2,9 @@
 
 In this section, we will implement kernel thread in Tacos. Before delving into the details, let's take a look at the abstractions we're going to build. Kernel thread and user thread are similar in many ways, so we will review the property of user threads and compare kernel threads and user threads. Thread API in Rust is neater than pthread, and we will support similar interfaces in Tacos. Understand `Send` and `Sync` traits will avoid a large proportion of concurrent bugs. Finally, we will compare kernel threads and user threads as a conclusion to this section.
 
-## User Threads and Kernel Threads
+## User threads and kernel threads
 
-In this document, *user threads* refers to threads inside a user program. User threads are:
+In this document, *user threads* refers to threads inside a user program. *User threads* are:
 
 * in a same *program*, thus share the same *address space*
 * running different tasks concurrently, thus each thread has an individual *stack*, *PC*, and *registers*

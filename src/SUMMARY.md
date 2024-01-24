@@ -31,11 +31,11 @@
 
   - [Introduction](3-kernelthread/introduction.md)
 
-  - [Member](3-kernelthread/member.md)
+  - [Thread context](3-kernelthread/thread_context.md)
 
-  - [Thread scheduler](3-kernelthread/thread_scheduler.md)
+  - [Time sharing](3-kernelthread/time_sharing.md)
 
-  - [Synchronization](3-kernelthread/synchronization.md)
+  - [Interruption](3-kernelthread/interruption.md)
 
 - [File system](4-filesystem.md)
 
