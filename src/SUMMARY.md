@@ -52,7 +52,7 @@
 # PROJECTS
 
 - [Schedulers](lab1-schedulers.md)
-  
+
   - [Tasks](lab1-schedulers/tasks.md)
 
   - [Testing](lab1-schedulers/testing.md)
@@ -68,3 +68,10 @@
 # APPENDIX
 
 - [Debugging](appendix/debugging.md)
+
+- [Testing](appendix/testing.md)
+
+- [Report Templates](appendix/templates.md)
+
+  - [Project 1](appendix/templates/proj1)
+
