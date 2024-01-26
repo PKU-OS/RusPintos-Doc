@@ -75,4 +75,8 @@
 
 - [Report Templates](appendix/templates.md)
 
-  - [Project 1](appendix/templates/proj1)
+  - [Project 1](appendix/templates/proj1.md)
+
+- [Grading Advice](appendix/grading-advice.md)
+
+  - [Project 1](appendix/grading-advice/proj1.md)
