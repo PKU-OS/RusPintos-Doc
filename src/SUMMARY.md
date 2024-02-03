@@ -35,7 +35,9 @@
 
   - [Time sharing](3-kernelthread/time_sharing.md)
 
-  - [Interruption](3-kernelthread/interruption.md)
+  - [Preemptive Scheduling](3-kernelthread/interruption.md)
+  
+  - [Synchronization](3-kernelthread/synchronization.md)
 
 - [File system](4-filesystem.md)
 

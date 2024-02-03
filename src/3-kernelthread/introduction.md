@@ -1,20 +1,6 @@
 # Introduction
 
-In this section, we will implement kernel thread in Tacos. Before delving into the details, let's take a look at the abstractions we're going to build. Kernel thread and user thread are similar in many ways, so we will review the property of user threads and compare kernel threads and user threads. Thread API in Rust is neater than pthread, and we will support similar interfaces in Tacos. Understand `Send` and `Sync` traits will avoid a large proportion of concurrent bugs. Finally, we will compare kernel threads and user threads as a conclusion to this section.
-
-## User threads and kernel threads
-
-In this document, *user threads* refers to threads inside a user program. *User threads* are:
-
-* in a same *program*, thus share the same *address space*
-* running different tasks concurrently, thus each thread has an individual *stack*, *PC*, and *registers*
-
-Similarly, *kernel threads* refers to threads inside the OS kernel. Like *user threads*, *kernel threads* are:
-
-* in the same *kernel*, thus share the *kernel address space*
-* running different tasks concurrently, thus each kernel thread has an individual *stack*, *PC*, and *registers*
-
-Multi-threaded programming in user spaces uses APIs provided by the OS, such as [pthreads](https://man7.org/linux/man-pages/man7/pthreads.7.html)(You should be familar with it! You may have learned it in ICS. You should consider drop this course if you haven't learned it...). By using those APIs, the OS maintains the *address space*, *stack*, *PC* and *registers* for user. However, as we are implementing an OS, we have to build it from scratch and maintain those states manually. In the following parts of this chapter, we will build it step by step.
+In this section, we will implement kernel thread in Tacos. Before delving into the details, let's take a look at the abstractions we're going to build. Thread API in Rust is neater than pthread, and we will support similar interfaces in Tacos. Understand `Send` and `Sync` traits will avoid a large proportion of concurrent bugs. Kernel thread and user thread are similar in many ways, so we will review the property of user threads and compare kernel threads and user threads. Finally, we will compare kernel threads and user threads as a conclusion to this section.
 
 ## Thread API in Rust
 
@@ -45,7 +31,60 @@ The `Send` and `Sync` traits, together with the ownerhip system, are extensively
 
 - `Send` trait is in some sense a weaker constraint, representing the safetyness of moving a type to another thread. For example, the `Cell` family is not `Sync` since it has no synchronization, but it is `Send`. Other types, such as `Rc<T>`, are neither `Sync` nor `Send`.
 
+A type `T` is `Sync` if and only if `&T` is `Send`.
+
+## Synchronization in Rust
+
+Two primary methods exist for synchronization are message passing and shared memory. In Rust `std`, `channel`s are designed for message passing, while `Mutex`s are designed for accessing shared memory. Following example shows the usage of `Mutex` and `channel`.
+
+```Rust
+use std::sync::{Mutex, mpsc};
+use std::thread;
+
+static COUNTER: Mutex<i32> = Mutex::new(0);
+
+fn main() {
+    let (sx, rx) = mpsc::channel();
+    sx.send(&COUNTER).unwrap();
+    
+    let handle = thread::spawn(move || {
+        let counter = rx.recv().unwrap();
+        for _ in 0..10 {
+            let mut num = counter.lock().unwrap();
+            *num += 1;
+        }
+    });
+    
+    for _ in 0..10 {
+        let mut num = COUNTER.lock().unwrap();
+        *num += 1;
+    }
+    
+    handle.join().unwrap();
+    
+    println!("num: {}", COUNTER.lock().unwrap());
+}
+```
+
+The type of the global variable `COUNTER` is `Mutex<i32>`, which implements the `Sync` trait. A global variable can be referenced by multiple threads, therefore we need `Sync` trait to avoid data races.
+
+We use `channel` to pass a reference of `COUNTER` to another thread (remember that `&Mutex<i32>` is `Send`, allowing us to safely send it to another thread).
+
+We use `Mutex` to ensure exclusive access. To access the data inside the mutex, we use the lock method to acquire the _lock_, which is a part of the `Mutex` struct. This call will block the current thread so it can’t do any work until it’s our turn to have the _lock_. The call to the `lock` method returns a smart pointer called `MutexGuard`, which implements `Deref` to point at our inner data, and implements `Drop` to release the lock automatically when a `MutexGuard` goes out of scope.
+
 ## User Threads v.s. kernel space
+
+In this document, *user threads* refers to threads inside a user program. *User threads* are:
+
+* in a same *program*, thus share the same *address space*
+* running different tasks concurrently, thus each thread has an individual *stack*, *PC*, and *registers*
+
+Similarly, *kernel threads* refers to threads inside the OS kernel. Like *user threads*, *kernel threads* are:
+
+* in the same *kernel*, thus share the *kernel address space*
+* running different tasks concurrently, thus each kernel thread has an individual *stack*, *PC*, and *registers*
+
+Multi-threaded programming in user spaces uses APIs provided by the OS, such as [pthreads](https://man7.org/linux/man-pages/man7/pthreads.7.html)(You should be familar with it! You may have learned it in ICS. You should consider drop this course if you haven't learned it...). By using those APIs, the OS maintains the *address space*, *stack*, *PC* and *registers* for user. However, as we are implementing an OS, we have to build it from scratch and maintain those states manually. In the following parts of this chapter, we will build it step by step.
 
 The table below compares the standard thread in modern OS and the kernel thread introduced in the section:
 

@@ -17,7 +17,7 @@ pub fn exit() -> ! { ... }
 
 ## States of a kernel thread
 
-Now consider there are multiple threads inside the kernel. Those threads are in different states. At a given time, a thread can be in one of four states: `Running`, `Ready`, `Blocked` and `Dying`. `Running` simply means the thread is running (As the OS is running on a single-core processor, there is only one `Running` thread at any given time). A thread in `Ready` state is ready to be scheduled. `Blocked` threads are blocked for different reasons(e.g. IO, wait for another thread to terminate, etc. It is complex, so we are not covering it in this section). `Dying` is a little bit tricky, we label a thread as `Dying` to release its resources in the (hopefully near) future. The state transitions are illustrated in the followin graph.
+Now consider there are multiple threads inside the kernel. Those threads are in different states. At a given time, a thread can be in one of four states: `Running`, `Ready`, `Blocked` and `Dying`. `Running` simply means the thread is running (As the OS is running on a single-core processor, there is only one `Running` thread at any given time). A thread in `Ready` state is ready to be scheduled. `Blocked` threads are blocked for different reasons(e.g. IO, wait for another thread to terminate, etc. It is complex, so we are not covering it in this section). `Dying` is a little bit tricky, we label a thread as `Dying` to release its resources in the (hopefully near) future. The state transitions are illustrated in the following graph.
 
 <img src="state.png" width="100%">
 
@@ -165,7 +165,7 @@ The `Schedule` trait allows us to separate the logic of context switching and se
 
 Now we are writing the `schedule` function. Suppose there are two kernel threads, T1 and T2. T1 calls `schedule()`, and the scheduler choose T2 to run. Basically, schedule must:
 
-* store callee-saved register values on T1's context (we needn't store caller saved values, because they have already saved on previos stack frame)
+* store callee-saved register values on T1's context (we needn't store caller saved values, because they have already saved in stack frame)
 * load T2'2 register values from T2's context (including load T2's sp)
 * transfer control to T2's PC
 * update information in `Manager`
