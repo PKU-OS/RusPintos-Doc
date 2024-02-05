@@ -55,9 +55,9 @@
 
 - [Schedulers](lab1-schedulers.md)
   
-  - [Tasks](lab1-schedulers/tasks.md)
+  - [Tasks](lab1-scheduling/tasks.md)
 
-  - [Testing](lab1-schedulers/testing.md)
+  - [Testing](lab1-scheduling/testing.md)
 
 - [User Programs](lab2-userprograms.md)
 
