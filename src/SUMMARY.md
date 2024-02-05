@@ -70,3 +70,9 @@
 # APPENDIX
 
 - [Debugging](appendix/debugging.md)
+
+- [Testing](appendix/testing.md)
+
+- [Report Templates](appendix/templates.md)
+
+  - [Project 1](appendix/templates/proj1)

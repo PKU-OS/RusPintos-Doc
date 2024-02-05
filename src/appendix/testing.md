@@ -1,6 +1,6 @@
 # Testing
 
-For your convenience during the labs, we've provided a set of tools. They are in `./tool/` directory. In the rest of this section, we'll use `./tool/` as the directory of the tools, and `./` as the directory of the OS. 
+For your convenience during the labs, we've provided a set of tools. They are in `./tool/` directory. In the rest of this section, we'll use `./tool/` as the directory of the tools, and `./` as the directory of the OS.
 
 > To use the tools you'll need to set your working directory under `./tool/` but not `./`, because the rust toolchain used by the tools (i.e., x86) is different from that by the OS itself (i.e., RISC-V).
 
@@ -8,13 +8,13 @@ For the usage of the toolset, you can run this command under `./tool/` for help 
 ```sh
 cargo h
 ```
-Such command is an alias of a more complicated command. For its original version (and other aliases) please refer to `./tool/.cargo/config.toml`. 
+Such command is an alias of a more complicated command. For its original version (and other aliases) please refer to `./tool/.cargo/config.toml`.
 
 In the rest of this section, we'll introduce the functions of the toolset.
 
 ## Build
 
-Basically, you can build the OS manually by running `cargo` under `./`. However, to correctly run and test your OS, there are some other building works, including building user programs and the disk image. Since these peripheral parts ar not written in Rust, building them manually is less convenient, and the building order makes the works more confusing. 
+Basically, you can build the OS manually by running `cargo` under `./`. However, to correctly run and test your OS, there are some other building works, including building user programs and the disk image. Since these peripheral parts ar not written in Rust, building them manually is less convenient, and the building order makes the works more confusing.
 
 In the toolset, we've provided a build tool. Run `cargo h build` for the usage (the alias of build tool is `cargo bd`):
 ```
@@ -31,7 +31,7 @@ Options:
 
 You can simply build the whole project, including OS, user programs and disk image by `cargo bd`. Also, you can clean or rebuild the project by specifying the `-c` and `-r` arguments. By the `-v` you can see the output of the building process (though they might not be helpful, just for fun).
 
-To manually build the OS, you can run `cargo` under `./`. In this way you can control the features you want to include. Existing feathres are listed in `./Cargo.toml`. 
+To manually build the OS, you can run `cargo` under `./`. In this way you can control the features you want to include. Existing feathres are listed in `./Cargo.toml`.
 
 To manually build use programs, you can run `make` under `./`. All of the user programs are written in C and located under `./user/`. If you want to write your own user programs, you can add `*.c` files under `./user/userprogs/` or `./user/vm/`. If you need to add a new sub-directory, like `./user/yours/`, you'll need to add `user/yours` to the `SRC_DIRS` in `./user/utests.mk`, otherwise your new program will not be added into disk image and your OS will not find it.
 
@@ -50,7 +50,7 @@ Usage: tool test [OPTIONS]
 Options:
   -c, --cases <CASES>
           The test cases to run. Only the name of test case is required.
-          
+
           Example: `tool test -c args-none` , `tool test -c args-none,args-many`
 
   -b, --books <BOOKS>
@@ -75,7 +75,7 @@ Options:
           Print help information (use `-h` for a summary)
 ```
 
-The test tool has several ways to use. 
+The test tool has several ways to use.
 
 **The first way** is to test one or a few specified cases. The usage is `cargo tt -c <args>`. An example is `cargo tt -c args-none,args-many`, which specifies the `args-none` and `args-many` cases. Some test cases need to pass special arguments to the OS through QEMU (like `args-many`), but you'll not need to pass it manulally. The test tool takes over it.
 
@@ -85,7 +85,7 @@ The first way is not convenient when your are testing too many cases. **The seco
 
 **The fourth way** is the grading mode. You can use the `-g, --grade` addon argument, or use the alias `cargo grade`. This is similar to test mode (ways 1-3), except the tool will show the grade of your OS when the test ends. We also uses this way to grade your submission.
 
-**The fifth way** is the gdb mode, specified by an addon argument `--gdb` (example: `cargo tt -c args-none --gdb`). An alias is also provided: `cargo gdb`. In this way, the test tool will start a background gdb process, which you can attach to via another gdb client. This is to help you to debug your OS in gdb without writing confusing QEMU cmds. Please note that in this mode, only one test case can be passed to the test tool. Bookmarks or more than one cases will be rejected. 
+**The fifth way** is the gdb mode, specified by an addon argument `--gdb` (example: `cargo tt -c args-none --gdb`). An alias is also provided: `cargo gdb`. In this way, the test tool will start a background gdb process, which you can attach to via another gdb client. This is to help you to debug your OS in gdb without writing confusing QEMU cmds. Please note that in this mode, only one test case can be passed to the test tool. Bookmarks or more than one cases will be rejected.
 
 **The sixth way** is dry run mode, specified by `--dry`, which is an addon argument. In the dry run mode, the test tool will not really start your OS, but show the commands for each test cases. These commands can be used under `./`. For example, if we run `cargo tt -c args-many --dry`, the outpout will be:
 ```
@@ -105,12 +105,12 @@ Usage: tool book [OPTIONS] --name <NAME>
 Options:
   -n, --name <NAME>
           The name of the bookmark.
-          
+
           Bookmark will be saved in `/bookmarks/<name>.json`
 
   -d, --del
           Delete mode. Turn 'add' into 'delete' in other options.
-          
+
           If no test cases are specified, delete the whole bookmark (with its file!).
 
   -c, --cases <CASES>
@@ -125,7 +125,7 @@ Options:
   -h, --help
           Print help information (use `-h` for a summary)
 ```
-In essential, the bookmarks record the name, arguments and grade of each test case. Some of the arguments are complex, and the grade is not that important for creating bookmarks. So the bookmark tool is to provide a way that only creates bookmarks by the name. 
+In essential, the bookmarks record the name, arguments and grade of each test case. Some of the arguments are complex, and the grade is not that important for creating bookmarks. So the bookmark tool is to provide a way that only creates bookmarks by the name.
 
 An example usage, which create a bookmark named `mybk.toml` and including `args-none, args-many` test cases are:
 ```sh

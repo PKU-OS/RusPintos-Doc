@@ -1,10 +1,14 @@
 # Tasks
 
+```admonish tip title="Suggestion"
+Please read through this document before working on any task.
+```
+
 ## Design Document
 
+<!-- todo: tweak the old design document? -->
 Download the [design document template](https://github.com/PKU-OS/pintos/blob/master/docs/p2.md) of project 2. Read through questions in the document for motivations, and fill it in afterwards.
 
-<!-- todo: maybe  -->
 ## Process Control Syscalls
 
 TacOS currently supports only one syscall — `exit`, which terminates the calling process. You will add support for the following new syscalls: `halt`, `exec`, `wait`.
@@ -48,17 +52,22 @@ Every user program that finishes in normally calls exit – even a program that 
 int exec(const char* pathname, const char* argv[]);
 ```
 
-Runs the executable whose path is given in `pathname`, passing any given arguments, and returns the new process’s program id (pid). `argv` is a `NULL`-terminated array of arguments, where the first argument is always the path of the executable. If the program cannot load or run for any reason, return -1. Thus, the parent process cannot return from a call to exec until it knows whether the child process successfully loaded its executable. You must use appropriate synchronization to ensure this.
+Runs the executable whose path is given in `pathname`, passing any given arguments, and returns the new process’s program id (pid). `argv` is a `NULL`-terminated array of arguments, where the first argument is usually the executable's name. If the program cannot load or run for any reason, return -1. Thus, the parent process cannot return from a call to exec until it knows whether the child process successfully loaded its executable. You must use appropriate synchronization to ensure this.
 
 
 ```admonish
 Keep in mind `exec` is different from Unix `exec`. It can be thought of as a Unix `fork` + Unix `exec`.
 ```
 
-```admonish tip
+```admonish tip title="Access User Memory Space"
 `exec` is the first syscall where a user passes a pointer to the kernel. Be careful and check if the pointer is valid. You may look up the page table to see if the pointer lays in a valid virtual memory region. Also, do make sure that each character within a string has a valid address. Don't just check the first address.
 
 With any invalid arguments, it's just fine to return -1. As for other syscalls with pointer arguments, please always check the validity of their memory addresses.
+```
+
+```admonish tip title="Argument Passing"
+To pass arguments to users, the kernel usually puts these arguments on the user's initial stack. Start from the stack top, there lies all arguments and their order doesn't matter as they are referred by pointers. Then, there are pointers in the `argv[]` array. Don't forget that `argv[]` ends with a `NULL`.
+Also, riscv sp must be 16-byte aligned.
 ```
 
 ### wait
@@ -119,6 +128,10 @@ int write(int fd, const void* buffer, unsigned size);
 Writes `size` bytes from buffer to the open file with file descriptor `fd`. Returns the number of bytes actually written. Returns -1 if fd does not correspond to an entry in the file descriptor table. Writing past end-of-file would normally extend the file, and file growth is implemented by the basic file system.
 
 File descriptor 1 writes to the console. You can simply use the `kprint` macro which also applys a lock on `Stdout` for you, making sure that output by different processes won't be interleaved on the console.
+
+```admonish tip
+Before you implement syscall `write` for fd 1, many test cases won't work properly.
+```
 
 ### remove
 
