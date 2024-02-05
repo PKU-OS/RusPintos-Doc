@@ -31,10 +31,12 @@
 
   - [Introduction](3-kernelthread/introduction.md)
 
-  - [Member](3-kernelthread/member.md)
+  - [Thread context](3-kernelthread/thread_context.md)
 
-  - [Thread scheduler](3-kernelthread/thread_scheduler.md)
+  - [Time sharing](3-kernelthread/time_sharing.md)
 
+  - [Preemptive Scheduling](3-kernelthread/interruption.md)
+  
   - [Synchronization](3-kernelthread/synchronization.md)
 
 - [File system](4-filesystem.md)
@@ -51,11 +53,9 @@
 
 # PROJECTS
 
-- [Scheduling](lab1-scheduling.md)
-
+- [Schedulers](lab1-schedulers.md)
+  
   - [Tasks](lab1-scheduling/tasks.md)
-
-  - [Suggestions](lab1-scheduling/suggestions.md)
 
   - [Testing](lab1-scheduling/testing.md)
 
