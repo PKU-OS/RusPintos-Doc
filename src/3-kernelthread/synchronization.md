@@ -332,4 +332,40 @@ impl<T, L: Lock> MutexGuard<'_, T, L> {
 
 ## `OnceCell` and `Lazy`: Ensure global values are initialized once
 
-Rust discourages global variables -- at least `Sync` trait is enforced. But we do need global variables, and we may need runtime information (e.g. DRAM size) to properly initialize it. `OnceCell` and `Lazy` is the solution. Like `Condvar`, they exist in std library, and the current implementation is influenced by std version. Because it is not highly related to the labs, we omit the details of the implementation. You are free to read it under the `sync/` directory.
+Rust discourages mutable global variables -- they are naturally referenced by mutiple threads, thus must be `Sync`. But we do need global variables, and we may need runtime information (e.g. DRAM size) to properly initialize it. `OnceCell` and `Lazy` is the solution. Like `Condvar`, they exist in std library, and the current implementation is influenced by std version. Because it is not highly related to the labs, we just give some examples and omit the details of the implementation. You are free to read it under the `src/kernel/sync/` directory.
+
+We used `Manager::get()` to access the singleton in this chapter, and we didn't discuss the implementation in previous sections, because the implementation of `get` used `Lazy` to lazily initialize the static variable. We take the current running thread as the "Initial" thread, create the idle thread, and build the global `TMANAGER`:
+
+```Rust
+// src/kernel/thread/manager.rs
+impl Manager {
+    pub fn get() -> &'static Self {
+        static TMANAGER: Lazy<Manager> = Lazy::new(|| {
+            let initial = Arc::new(Thread::new("Initial", 0, PRI_DEFAULT, 0, None, None));
+            initial.set_status(Status::Running);
+
+            let manager = Manager {
+                scheduler: Mutex::new(Scheduler::default()),
+                all: Mutex::new(VecDeque::from([initial.clone()])),
+                current: Mutex::new(initial),
+            };
+
+            // Thread builder is not ready, we must manually build idle thread.
+            let function: *mut Box<dyn FnOnce()> = Box::into_raw(Box::new(Box::new(|| loop {
+                schedule()
+            })));
+            let stack = kalloc(STACK_SIZE, STACK_ALIGN) as usize;
+            let idle = Arc::new(Thread::new(
+                "idle",
+                stack,
+                function as usize,
+            ));
+            manager.register(idle);
+
+            manager
+        });
+
+        &TMANAGER
+    }
+}
+```
