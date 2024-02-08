@@ -3,6 +3,7 @@
 ## Understanding Threads
 
 To complete this lab, the first step is to read and understand the code for the initial thread system. Tacos already implements **thread creation** and **thread completion**, **a FIFO scheduler** to switch between threads, and **synchronization primitives (semaphores, locks, condition variables, and optimization barriers)**. Some of the code might seem slightly mysterious. You can read through the [kernel thread](3-kernelthread.md) part to see what's going on. Understand normal thread in user spaces will be helpful, but not necessary. You can find introduction to threads in any OS textbook (including CSAPP).
+
 <!-- ! Do we have Optimization Barriers? -->
 
 ## Use Source Code Control System (e.g. Git)
