@@ -35,7 +35,7 @@ Our tests also use assertions to check your implementations.
 
 ## GDB
 
-You can run Pintos under the supervision of the GDB debugger.
+You can run Tacos under the supervision of the GDB debugger.
 
 * First, you should start Tacos, and freeze CPU at startup, and open a remote gdb port to wait for connection. You could enable it by passing `-S` and `-s` option to qemu. For the empty example's execution, you could run following command in the project root directory:
 

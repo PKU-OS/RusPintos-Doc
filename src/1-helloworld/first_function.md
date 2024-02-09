@@ -25,7 +25,7 @@ An empty `main` is created and the dummy `addi` is replaced with `j`. A few othe
 
 - The `extern "C"` is part of the Foreign Function Interface (FFI) - a set of compiler arguments to make foreign function calls are compatible. Since we are transfering from assembly, which is not part of the Rust standard, `rustc` is free to changing the calling convention in the future. This attribute ensures `j main`, the way function get called in `C`, always works.
 
-- The `#[no_mangle]` attribute asks the compiler not to mess up the name `main`. If not, `rustc` will probably rename it to something like `__ZN6pintos4main17h704e3c653e7bf0d3E` - not sweet for someone who need to directly reference the symbol in assembly.
+- The `#[no_mangle]` attribute asks the compiler not to mess up the name `main`. If not, `rustc` will probably rename it to something like `__ZNtacos4main17h704e3c653e7bf0d3E` - not sweet for someone who need to directly reference the symbol in assembly.
 
 - The stack pointer is initialized by some memory address. If nothing is loaded to `sp`, a page fault will be triggered once `sp` is accessed to save the call stack. Once again, `0x80400000` is an arbitrary address which will not overlap with anything useful, for now.
 

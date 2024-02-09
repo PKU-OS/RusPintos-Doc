@@ -20,7 +20,7 @@ That actually compiles, provided that we have the right target:
 
 ```shell
 $ cargo build --target riscv64gc-unknown-none-elf
-   Compiling rus_pintos v0.1.0 (/path/to/rus_pintos)
+   Compiling tacos v0.1.0 (/path/to/tacos)
     Finished dev [unoptimized + debuginfo] target(s) in 0.20s
 ```
 
@@ -68,7 +68,7 @@ RUSTFLAGS=-Clink-arg=-Tsrc/linker.ld cargo build --target riscv64gc-unknown-none
 and ask QEMU to load and simulate the generated target on a virtual machine
 
 ```shell
-qemu-system-riscv64 -nographic -machine virt -kernel target/riscv64gc-unknown-none-elf/debug/rus_pintos
+qemu-system-riscv64 -nographic -machine virt -kernel target/riscv64gc-unknown-none-elf/debug/tacos
 ```
 
 If nothing went wrong, it will stuck after printing some pretty welcome message:

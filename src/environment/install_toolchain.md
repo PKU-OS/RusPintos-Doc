@@ -120,7 +120,7 @@ cd /workspaces/Tacos
 > __Important__
 >
 > * __Do not just copy and paste the command below!__ At least you need to replace __the absolute path to your Tacos directory__ and the __container name__ in the command!
-> * If you choose this way to setup the enviroment, you will use this command throughout this semester. It is tedious to remember it and type it again and again. You can choose the way you like to avoid this. e.g. You can use the alias Linux utility to save this command as pintos-up for example.
+> * If you choose this way to setup the enviroment, you will use this command throughout this semester. It is tedious to remember it and type it again and again. You can choose the way you like to avoid this. e.g. You can use the alias Linux utility to save this command as tacos-up for example.
 
 If you see following output, you are already inside the container:
 
