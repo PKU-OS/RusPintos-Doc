@@ -53,7 +53,7 @@
 
 # PROJECTS
 
-- [Schedulers](lab1-schedulers.md)
+- [Scheduling](lab1-scheduling.md)
   
   - [Tasks](lab1-scheduling/tasks.md)
 
