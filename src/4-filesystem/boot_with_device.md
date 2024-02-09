@@ -4,7 +4,7 @@ Recall how we link and load our kernel in [Section-1](../1-helloworld/first_inst
 
 ## QEMU command line arguments for devices
 
-QEMU provides a set of command line arguments that allows you to pass divices to you kernel. A plenty types of devices are supported. In our kernel, we mainly focuses on a small set of them:
+QEMU provides a set of command line arguments that allows you to pass devices to you kernel. A plenty types of devices are supported. In our kernel, we mainly focuses on a small set of them:
 
 - **Physical memory**: QEMU allows you to specify the total size of physical memory space via argument `-m <SIZE>`.
 - **Bootargs**: QEMU allows you to pass arbitrary arguments to your kernel upon boot via `-append "ARGS"`.
@@ -27,9 +27,9 @@ qemu-system-riscv64 -nographic -machine virt \
 
 Conceptually, after booting the kernel with command above, the kernel is able to use the speficied devices. However, it requires some efforts to find these devices correctly.
 
-By default, QEMU passes the device information to the kernel in device tree format. To be more specific, the device tree is serialized into Device Tree Blob (DTB) format, and placed on a contiguous region on memory. Each node on the device tree records information about a device, such as memory, and may contain some sub nodes. 
+By default, QEMU passes the device informations to the kernel in device tree format. To be more specific, the device tree is serialized into Device Tree Blob (DTB) format, and placed on a contiguous region on memory. Each node on the device tree records informations about a device, such as memory, and may contain some sub nodes. 
 
-Please refer to the [documentation](https://devicetree-specification.readthedocs.io) about how exact the DTB are arranged, and what types of device are supported in DTB. We have provided a function (src/dtb/dtb.rs) that traverses the device tree and parse some basic informations.
+Please refer to the [documentation](https://devicetree-specification.readthedocs.io) about how exact the DTB are arranged, and what types of device are supported in DTB. We have provided a function (src/dtb/dtb.rs) that traverses the device tree and parses some basic informations.
 
 ## Virtio
 
