@@ -1,4 +1,4 @@
-# Project 2: User Programs
+# Lab 2: User Programs
 
 ---
 

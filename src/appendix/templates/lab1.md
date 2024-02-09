@@ -1,4 +1,4 @@
-# Project 1: Scheduling
+# Lab 1: Scheduling
 
 ---
 
