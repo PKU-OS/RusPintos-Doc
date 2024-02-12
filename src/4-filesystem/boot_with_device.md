@@ -12,13 +12,13 @@ QEMU provides a set of command line arguments that allows you to pass devices to
 
 For more device types please refer to QEMU's official [documentation](TODO).
 
-Eventually, booting our kernel with a 8M memory, a disk and some arguments can be done with command as follow:
+Eventually, booting our kernel with a 32M memory, a disk and some arguments can be done with command as follow:
 ```sh
 qemu-system-riscv64 -nographic -machine virt \
 -global virtio-mmio.force-legacy=false \
 --blockdev driver=file,node-name=disk,filename=disk.img \
 -device virtio-blk-device,drive=disk,bus=virtio-mmio-bus.0 \
--m 8M \
+-m 32M \
 -append "arg" \
 -kernel <kernel>
 ```

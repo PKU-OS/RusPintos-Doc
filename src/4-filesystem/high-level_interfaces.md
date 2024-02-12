@@ -1,8 +1,8 @@
-# Scalable interfaces
+# High-level interfaces
 
 The implementations we mentioned in previous section, i.e., `FreeMap`, `DiskInode`, `RootDir` and `Path`, are sufficient to build an on-disk FS. Now, we are going to implement high-level interfaces. The interfaces are going to provide an abstract of the low-level resources, including files, inodes and directories.
 
-When we talk about "abstract", we imply that we are going to group together a set of objects with similar features. Particularly, an OS kernel will facing multiple kinds of FSs, locate on disks or even in memory. The inodes, files and directories in these FSs may also have different formats. However, they still share several same concepts, which will decide our interfaces.
+When we talk about "abstract", we imply that we are going to group together a set of objects with similar features. Particularly, an OS kernel will facing multiple kinds of FSs, locate on disks or even in memory. The inodes, files and directories in these FSs may also have different formats. However, they still share several same concepts, which will decide our interfaces. With these high-level interfaces, the OS can manage different disks and files more easily.
 
 # FS interface
 

@@ -45,7 +45,7 @@
 
   - [Design a file system](4-filesystem/design_file_system.md)
 
-  - [Scalable interfaces](4-filesystem/scalable_interfaces.md)
+  - [High-level interfaces](4-filesystem/high-level_interfaces.md)
 
 - [User program](5-userprogram.md)
 
