@@ -2,7 +2,7 @@
 
 ## Design Doc
 
-Download the [design document template](https://github.com/PKU-OS/pintos/blob/master/docs/p1.md) of project 1. Read through questions in the document for motivations, and fill it in afterwards.
+Download the [design document template](https://github.com/PKU-OS/Tacos/blob/main/doc/lab1.md) of project 1. Read through questions in the document for motivations, and fill it in afterwards.
 
 ## Alarm Clock
 

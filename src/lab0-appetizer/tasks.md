@@ -6,7 +6,7 @@ Read the [ENVIROMENT](environment/install_toolchain.md) to setup your local deve
 
 ## Design Doc
 
-Download the [design document template](xxx) of project 0. Read through questions in the document for motivations, and fill it in afterwards.
+Download the [design document template](https://github.com/PKU-OS/Tacos/blob/main/doc/lab0.md) of project 0. Read through questions in the document for motivations, and fill it in afterwards.
 
 ## Booting Tacos
 

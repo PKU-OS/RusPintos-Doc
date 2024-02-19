@@ -1,5 +1,7 @@
 # Welcome to Tacos Doc!
 
+<img src="/assets/tacos-title/tacos-title.PNG" width="100%">
+
 Tacos is an operating system developed in Rust for RISC-V platforms. This minimal OS incorporates Rust's design principles and is intended for educational purposes. The source code, toolchain, and documentation have been developed by our team at Peking University (refer to [Acknowledgement](#Acknowledgement) for details). The main source code is available at [https://github.com/PKU-OS/Tacos](https://github.com/PKU-OS/Tacos).
 
 The code structure is designed to be modular, which means that some components of the OS can be enabled by including the corresponding source code directory for compilation. Under the `src` directory, some folders (e.g., `sbi`) are required for running the OS, while others (e.g., `userproc`) are only used incrementally for each lab.

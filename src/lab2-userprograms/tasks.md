@@ -7,7 +7,7 @@ Please read through this document before working on any task.
 ## Design Document
 
 <!-- todo: tweak the old design document? -->
-Download the [design document template](https://github.com/PKU-OS/pintos/blob/master/docs/p2.md) of project 2. Read through questions in the document for motivations, and fill it in afterwards.
+Download the [design document template](https://github.com/PKU-OS/Tacos/blob/main/doc/lab2md) of project 2. Read through questions in the document for motivations, and fill it in afterwards.
 
 ## Process Control Syscalls
 
