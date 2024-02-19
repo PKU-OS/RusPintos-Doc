@@ -53,6 +53,10 @@
 
 # PROJECTS
 
+- [Appetizer](lab0-appetizer.md)
+
+  - [Tasks](lab0-appetizer/tasks.md)
+
 - [Scheduling](lab1-scheduling.md)
   
   - [Tasks](lab1-scheduling/tasks.md)

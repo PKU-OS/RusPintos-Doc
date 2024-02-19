@@ -49,13 +49,19 @@ This [website](https://code.visualstudio.com/docs/devcontainers/containers#_quic
 
 ### Run Tacos
 
-After entered the dev container, open a shell and use following command to build and run Tacos:
+After entered the dev container, open a shell and use following command to build Tacos's disk image:
+
+```shell
+make
+```
+
+`make` will build `disk.img` under `build/` directory, which is used as the hard disk of Tacos. Then, you are able to run Tacos with:
 
 ```shell
 cargo run
 ```
 
-`cargo run` first builds the kernel, and then use `qemu` emulator to run it. This is done by setting `runner` in `.cargo/config.toml`.
+`cargo run` will build the kernel, and then use `qemu` emulator to run it. This is done by setting `runner` in `.cargo/config.toml`. 
 
 If everything goes fine, you will see following outputs:
 
