@@ -39,7 +39,7 @@
   
   - [Synchronization](3-kernelthread/synchronization.md)
 
-- [File system](4-filesystem.md)
+<!-- - [File system](4-filesystem.md)
 
   - [Device tree](4-filesystem/device_tree.md)
 
@@ -49,27 +49,27 @@
 
   - [Privileged execution](5-userprogram/privileged_execution.md)
 
-  - [Virtual memory](5-userprogram/virtual_memory.md)
+  - [Virtual memory](5-userprogram/virtual_memory.md) -->
 
 # PROJECTS
 
-- [Lab0 Appetizer](lab0-appetizer.md)
+- [Lab0: Appetizer](lab0-appetizer.md)
 
   - [Tasks](lab0-appetizer/tasks.md)
 
-- [Lab1 Scheduling](lab1-scheduling.md)
+- [Lab1: Scheduling](lab1-scheduling.md)
   
   - [Tasks](lab1-scheduling/tasks.md)
 
   - [Testing](lab1-scheduling/testing.md)
 
-- [Lab2 User Programs](lab2-userprograms.md)
+- [Lab2: User Programs](lab2-userprograms.md)
 
   - [Tasks](lab2-userprograms/tasks.md)
 
   - [Testing](lab2-userprograms/testing.md)
 
-- [Lab3 Virtual Memory](lab3-virtual_memory.md)
+- [Lab3: Virtual Memory](lab3-virtual_memory.md)
 
 # APPENDIX
 
