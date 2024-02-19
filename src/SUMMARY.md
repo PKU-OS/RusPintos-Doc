@@ -69,7 +69,7 @@
 
   - [Testing](lab2-userprograms/testing.md)
 
-- [VM swapping](lab3-vmswapping.md)
+- [Virtual Memory](lab3-virtual_memory.md)
 
 # APPENDIX
 

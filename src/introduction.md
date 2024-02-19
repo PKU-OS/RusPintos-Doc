@@ -1,12 +1,8 @@
 # Welcome to Tacos Doc!
 
-Tacos is an operating system developed in Rust for RISC-V platforms. This minimal OS incorporates Rust's design principles and is intended for educational purposes. The source code, toolchain, and documentation have been developed by our team at Peking University (refer to [Acknowledgement](#Acknowledgement) for details). The main source code is available at [https://github.com/PKU-OS/RusPintos](https://github.com/PKU-OS/RusPintos).
+Tacos is an operating system developed in Rust for RISC-V platforms. This minimal OS incorporates Rust's design principles and is intended for educational purposes. The source code, toolchain, and documentation have been developed by our team at Peking University (refer to [Acknowledgement](#Acknowledgement) for details). The main source code is available at [https://github.com/PKU-OS/Tacos](https://github.com/PKU-OS/Tacos).
 
-The code structure is designed to be modular, which means that some components of the OS can be enabled by including the corresponding source code directory for compilation. Under the `src` directory, some folders (e.g., `sbi`) are required for running the OS, while others (e.g., `userproc`) are only used incrementally for each lab. Below is an overview of the code structure:
-
-```
-TODO
-```
+The code structure is designed to be modular, which means that some components of the OS can be enabled by including the corresponding source code directory for compilation. Under the `src` directory, some folders (e.g., `sbi`) are required for running the OS, while others (e.g., `userproc`) are only used incrementally for each lab.
 
 This documentation contains a detailed walkthrough of how Tacos is written from scratch. We will start from an empty folder. The basic code structure for bare-metal execution is implemented in the [HelloWorld](./1-helloworld.md) section. Then, in the [Memory](./2-memory.md) section, we set up the kernel address space and manage the physical memory, including a global memory allocator. The code written in the above two sections is required for running the OS and will stay unchanged throughout the whole lab.
 
@@ -22,7 +18,7 @@ In the [UserProgram](./5-userprogram.md) section, we implement user-level progra
 
 - [**Syscalls**](./lab2-userprograms.md). We will implement various system calls for the user program, including process control calls (e.g., `wait` and `exit`) and file system operations (e.g., `read` and `write`).
 
-- [**Swapping**](./lab3-vmswapping.md). We will implement virtual page swapping for user programs.
+- [**Virtual Memory**](./lab3-virtual_memory.md). We will implement virtual page swapping, and memory map system call for user programs.
 
 ## Acknowledgement
 
