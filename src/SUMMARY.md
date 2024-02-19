@@ -53,23 +53,23 @@
 
 # PROJECTS
 
-- [Appetizer](lab0-appetizer.md)
+- [Lab0 Appetizer](lab0-appetizer.md)
 
   - [Tasks](lab0-appetizer/tasks.md)
 
-- [Scheduling](lab1-scheduling.md)
+- [Lab1 Scheduling](lab1-scheduling.md)
   
   - [Tasks](lab1-scheduling/tasks.md)
 
   - [Testing](lab1-scheduling/testing.md)
 
-- [User Programs](lab2-userprograms.md)
+- [Lab2 User Programs](lab2-userprograms.md)
 
   - [Tasks](lab2-userprograms/tasks.md)
 
   - [Testing](lab2-userprograms/testing.md)
 
-- [Virtual Memory](lab3-virtual_memory.md)
+- [Lab3 Virtual Memory](lab3-virtual_memory.md)
 
 # APPENDIX
 
@@ -77,8 +77,8 @@
 
 - [Debugging](appendix/debugging.md)
 
-- [Report Templates](appendix/templates.md)
+<!-- - [Report Templates](appendix/templates.md)
 
   - [Lab 1](appendix/templates/lab1.md)
 
-  - [Lab 2](appendix/templates/lab2.md)
+  - [Lab 2](appendix/templates/lab2.md) -->
