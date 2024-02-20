@@ -1,8 +1,8 @@
 # Tasks
 
-```admonish tip title="Suggestion"
-Please read through this document before working on any task.
-```
+> __Suggestion__
+>
+> Please read through this document before working on any task.
 
 ## Design Document
 
@@ -42,9 +42,9 @@ void exit(int status);
 
 Terminates the current user program, returning status to the kernel. If the process’s parent waits for it (see below), this is the status that will be returned. Conventionally, a status of 0 indicates success and non-zero values indicate errors.
 
-```admonish
-Every user program that finishes in normally calls exit – even a program that returns from main calls exit indirectly.
-```
+> __Note__
+>
+> Every user program that finishes in normally calls exit – even a program that returns from main calls exit indirectly.
 
 ### exec
 
@@ -54,21 +54,20 @@ int exec(const char* pathname, const char* argv[]);
 
 Runs the executable whose path is given in `pathname`, passing any given arguments, and returns the new process’s program id (pid). `argv` is a `NULL`-terminated array of arguments, where the first argument is usually the executable's name. If the program cannot load or run for any reason, return -1. Thus, the parent process cannot return from a call to exec until it knows whether the child process successfully loaded its executable. You must use appropriate synchronization to ensure this.
 
+> __Note__
+>
+> Keep in mind `exec` is different from Unix `exec`. It can be thought of as a Unix `fork` + Unix `exec`.
 
-```admonish
-Keep in mind `exec` is different from Unix `exec`. It can be thought of as a Unix `fork` + Unix `exec`.
-```
+> __Tip: Access User Memory Space__
+>
+> `exec` is the first syscall where a user passes a pointer to the kernel. Be careful and check if the pointer is valid. You may look up the page table to see if the pointer lays in a valid virtual memory region. Also, do make sure that each character within a string has a valid address. Don't just check the first address.
+> 
+> With any invalid arguments, it's just fine to return -1. As for other syscalls with pointer arguments, please always check the validity of their memory addresses.
 
-```admonish tip title="Access User Memory Space"
-`exec` is the first syscall where a user passes a pointer to the kernel. Be careful and check if the pointer is valid. You may look up the page table to see if the pointer lays in a valid virtual memory region. Also, do make sure that each character within a string has a valid address. Don't just check the first address.
-
-With any invalid arguments, it's just fine to return -1. As for other syscalls with pointer arguments, please always check the validity of their memory addresses.
-```
-
-```admonish tip title="Argument Passing"
-To pass arguments to users, the kernel usually puts these arguments on the user's initial stack. Start from the stack top, there lies all arguments and their order doesn't matter as they are referred by pointers. Then, there are pointers in the `argv[]` array. Don't forget that `argv[]` ends with a `NULL`.
+> __Tip: Argument Passing__
+>
+> To pass arguments to users, the kernel usually puts these arguments on the user's initial stack. Start from the stack top, there lies all arguments and their order doesn't matter as they are referred by pointers. Then, there are pointers in the `argv[]` array. Don't forget that `argv[]` ends with a `NULL`.
 Also, riscv sp must be 16-byte aligned.
-```
 
 ### wait
 
@@ -86,9 +85,9 @@ wait must fail and return -1 immediately if any of the following conditions are 
 
 Processes may spawn any number of children, wait for them in any order, and may even exit without having waited for some or all of their children. Your design should consider all the ways in which waits can occur. All of a process’s resources, including its struct thread, **must be freed** whether its parent ever waits for it or not, and regardless of whether the child exits before or after its parent.
 
-```admonish tip
-Implementing wait requires considerably more work than the other syscalls. Schedule your work wisely.
-```
+> __Tip__
+>
+> Implementing wait requires considerably more work than the other syscalls. Schedule your work wisely.
 
 ## File Operation Syscalls
 
@@ -168,7 +167,7 @@ Returns the position of the next byte to be read or written in open file `fd`, e
 ```C
 // user/lib/fstat.h
 typedef struct {
-    uint ino;     // Inode number
+    uint64 ino;     // Inode number
     uint64 size;  // Size of file in bytes
 } stat;
 
