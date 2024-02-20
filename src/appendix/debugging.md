@@ -70,6 +70,6 @@ This may take some time, so please be patient.
 
 FYI, `file-debug` and `debug-qemu` are gdb macros defined in `.gdbinit` file.
 
-## Qemu
+<!-- ## Qemu
 
-TBD
+TBD -->

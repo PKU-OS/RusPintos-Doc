@@ -2,7 +2,7 @@
 
 ## Enviroment preparation
 
-Read the [ENVIROMENT](environment/install_toolchain.md) to setup your local development environment and get familiar with the course project.
+Read the [ENVIROMENT](/environment/install_toolchain.md) to setup your local development environment and get familiar with the course project.
 
 ## Design Doc
 
@@ -14,7 +14,7 @@ If you have Tacos development environment setup as described in the [Install too
 
 ## Debugging
 
-While you are working on the projects, you will frequently use the GNU Debugger (GDB) to help you find bugs in your code. Make sure you read the [Debugging](appendix/debugging.md) section first. In addition, if you are unfamiliar with riscv assembly, the [RISC-V Instruction Set Manual](https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf) is a excellent reference. Some online resources, such as [Five Embeddev](https://five-embeddev.com/riscv-isa-manual/latest/riscv-spec.html), are also available.
+While you are working on the projects, you will frequently use the GNU Debugger (GDB) to help you find bugs in your code. Make sure you read the [Debugging](/appendix/debugging.md) section first. In addition, if you are unfamiliar with riscv assembly, the [RISC-V Instruction Set Manual](https://riscv.org/wp-content/uploads/2017/05/riscv-spec-v2.2.pdf) is a excellent reference. Some online resources, such as [Five Embeddev](https://five-embeddev.com/riscv-isa-manual/latest/riscv-spec.html), are also available.
 
 In this section, you will use GDB to trace the QEMU emulation to understand how Tacos boots. __Follow the steps below and answer the questions in your design document__:
 

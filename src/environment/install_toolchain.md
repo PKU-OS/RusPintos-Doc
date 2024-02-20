@@ -1,6 +1,6 @@
 # Install toolchain
 
-We provided several ways to setup the develop enviroment.
+We provide several ways to setup the develop enviroment.
 
 * Option A: If you're using vscode on a desktop platform, the simplest and the recommended way to setup is to use `Docker Desktop` and the `Dev Container` plugin in vscode.
 * Option B: If you prefer other editors, you are encouraged to use build or use the pre-built docker image.
