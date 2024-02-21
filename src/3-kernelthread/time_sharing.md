@@ -23,8 +23,8 @@ Now consider there are multiple threads inside the kernel. Those threads are in 
 
 Those states can be found in:
 
+File: src/thread/imp.rs
 ```rust
-// src/kernel/thread/imp.rs
 /// States of a thread's life cycle
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum Status {
@@ -41,8 +41,8 @@ pub enum Status {
 
 And a `Thread` struct contains a `status` field. It is also inside a `Mutex` beacuse it is mutable.
 
+File: src/thread/imp.rs
 ```Rust
-// src/kernel/thread/imp.rs
 #[repr(C)]
 pub struct Thread {
     tid: isize,
@@ -70,8 +70,8 @@ impl Thread {
 
 Because at any given time, only one thread could be in `Running` state. Therefore, the easiest way is to record it in the `Manager` struct. The `current` function could thus be implemented:
 
+File: src/thread/manager.rs
 ```Rust
-// src/kernel/thread/manager.rs
 /// Global thread manager, contains a scheduler and a current thread.
 pub struct Manager {
     /// The current running thread
@@ -79,8 +79,10 @@ pub struct Manager {
     /// All alive and not yet destroyed threads
     all: Mutex<VecDeque<Arc<Thread>>>,
 }
+```
 
-// src/kernel/thread.rs
+File: src/thread.rs
+```Rust
 /// Get the current running thread
 pub fn current() -> Arc<Thread> {
     Manager::get().current.lock().clone()
@@ -91,8 +93,8 @@ pub fn current() -> Arc<Thread> {
 
 When a thread yields, the OS is responsible to select another ready thread and schedule it. Many algorithms can achieve this. Therefore, we designed the `Schedule` trait to standardize it.
 
+File: src/thread/scheduler.rs
 ```Rust
-// src/kernel/thread/scheduler.rs
 /// Basic thread scheduler functionalities.
 pub trait Schedule: Default {
     /// Notify the scheduler that a thread is able to run. Then, this thread
@@ -107,8 +109,8 @@ pub trait Schedule: Default {
 
 The `Schedule` trait looks nice, but how to use it? In fact, we added a new field, `scheduler` in the `Manager` struct, who will use `scheduler` to select from the thread candidates, and record the ready threads. For example, when a new thread is created, its default state is `Ready`. So the `Manager` will call `scheduler` to register it into the scheduler.
 
+File: src/thread/manager.rs
 ```Rust
-// src/kernel/thread/manager.rs
 /// Global thread manager, contains a scheduler and a current thread.
 pub struct Manager {
     /// Global thread scheduler
@@ -135,8 +137,8 @@ impl Manager {
 
 Implement a scheduler is easy (at least for FIFO scheduler):
 
+// File: src/thread/scheduler/fcfs.rs
 ```Rust
-// src/kernel/thread/scheduler/fcfs.rs
 /// FIFO scheduler.
 #[derive(Default)]
 pub struct Fcfs(VecDeque<Arc<Thread>>);
@@ -154,8 +156,8 @@ impl Schedule for Fcfs {
 
 To use the FIFO scheduler, we need to create a type alias:
 
+// File: src/thread/scheduler.rs
 ```Rust
-// src/kernel/thread/scheduler.rs
 pub type Scheduler = self::fcfs::Fcfs;
 ```
 
@@ -195,8 +197,8 @@ We divided the `schedule` function into 3 steps:
 
 The first and third step needs to modify the `Manager` or the `Scheduler`, therefore they are implemented as a method of `Manager`. The second step has to be written in assembly. Let's start from the first step:
 
+// File: src/thread/manager.rs
 ```Rust
-// src/kernel/thread/manager.rs
 impl Manager {
     ...
     pub fn schedule(&self) {
@@ -229,8 +231,8 @@ The first step is done in `Manager::schedule` function. We first find another ru
 
 The next step is in the `switch` funtion. `switch` is written in riscv asm, and we prepared a signiture for it in rust extern "C", in order to force it to stick to the C calling convention (a0~a7 are arguments, ...):
 
+File: src/thread/switch.rs
 ```Rust
-// src/kernel/thread/switch.rs
 #[allow(improper_ctypes)]
 extern "C" {
     /// Save current registers in old. Load from new.
@@ -289,8 +291,8 @@ extern "C" fn schedule_tail_wrapper(previous: *const Thread) {
 
 `old` is the previous thread's context, we will write to it; `new` is the next thread's context, we will read from it. The `switch` function changes the runtime stack. Then we jump to the `schedule_tail_wrapper`, where we call the `Manager::schedule_tail`, finish the `schedule` procedure:
 
+File: src/thread/manager.rs
 ```Rust
-// src/kernel/thread/manager.rs
 impl Manager {
     /// Note: This function is running on the stack of the new thread.
     pub fn schedule_tail(&self, previous: Arc<Thread>) {
@@ -320,8 +322,8 @@ After `schedule_tail` finishes, we have already done everything needed to switch
 
 With three functions introduced above, the `schedule` funtion could be implemented in this way:
 
+File: src/thread.rs
 ```Rust
-// src/kernel/thread.rs
 /// Yield the control to another thread (if there's another one ready to run).
 pub fn schedule() {
     Manager::get().schedule()
@@ -332,8 +334,8 @@ pub fn schedule() {
 
 In `schedule_tail`, the status matches `Dying` means the previous function is exited. Therefore, in the `exit` function, all we need to do is to set the status to `Dying`, and then schedule another funtion.
 
+File: src/thread.rs
 ```Rust
-// src/kernel/thread.rs
 /// Gracefully shut down the current thread, and schedule another one.
 pub fn exit() -> ! {
     {

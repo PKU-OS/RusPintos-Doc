@@ -27,6 +27,7 @@ We will enable timer interrupt in Tacos by using above features in riscv. Fortun
 
 Timer interrupts are not enabled automatically, we need to turn it on manually. Sometimes we want to turn it down to synchronize. Turn on/off the interrupt can be done by modifying `sstatus` or `sie` CSR. We choose to modify the `sie` register:
 
+File: src/sbi/interrupt.rs
 ```Rust
 #[inline]
 fn on() {
@@ -75,8 +76,8 @@ In riscv, two CSRs decide the behavior of timer interrupt:
 
 We could use sbi calls to read `mtime` register:
 
+File: src/sbi/timer.rs
 ```Rust
-// src/sbi/timer.rs
 pub const CLOCK_PRE_SEC: usize = 12500000;
 
 /// Get current clock cycle
@@ -100,8 +101,8 @@ pub fn time_us() -> usize {
 
 or write `mtimecmp` register. Following code modifies the `mtimecmp` register to trigger a timer interrupt after 100ms = 0.1s.
 
+File: src/sbi/timer.rs
 ```Rust
-// src/sbi/timer.rs
 /// Set the next moment when timer interrupt should happen
 use crate::sbi::set_timer;
 pub const TICKS_PER_SEC: usize = 10;
@@ -122,8 +123,8 @@ Normally a trap handler contains 3 steps:
 
 Let's start with context preservation and recovery. A trap may be caused by an interrupt or an exception. When it is caused by an interrupt, it happens asychronously, which means a thread cannot expect the time when the interrupt happens. When a timer interrupt happens, if the current thread is not finished, we definitely want to resume the execution after the interrupt is handled. Therefore, every general purpose registers must be preserved. The trap process and the `sret` instruction uses `sepc` and `sstatus`, we should preserve them as well (if we want to support nested interrupt, which is inevitable in supporting preemptive scheduling). We use the `Frame` struct to preserve the context:
 
+File: src/trap.rs
 ```Rust
-// src/kernel/trap.rs
 #[repr(C)]
 /// Trap context
 pub struct Frame {
@@ -138,8 +139,8 @@ pub struct Frame {
 
 And use following assembly code to preserve it, and pass a mutable reference to the `trap_handler` function in the `a0` register:
 
+File: src/trap.rs
 ```Rust
-// src/kernel/trap.rs
 arch::global_asm! {r#"
     .section .text
         .globl trap_entry
@@ -244,8 +245,8 @@ arch::global_asm! {r#"
 
 Before the `trap_exit` part, we called `trap_handler`, which is used to handle the interrupt or exception. When a trap happens, the
 
+File: src/trap.rs
 ```Rust
-// src/kernel/trap.rs
 use riscv::register::scause::{
     Exception::{self, *},
     Interrupt::*,
@@ -280,8 +281,8 @@ pub extern "C" fn trap_handler(frame: &mut Frame) {
 
 Currently we only handle timer interrupts. Other interrupts/exceptions will be added with IO devices or user programs. We handle the timer interrupt in this way: first, we call `tick` to update the `TICKS` static variable, and call `next` reset the `mtimecmp` register:
 
+File: src/sbi/timer.rs
 ```Rust
-// src/sbi/timer.rs
 static TICKS: AtomicI64 = AtomicI64::new(0);
 
 /// Returns the number of timer ticks since booted.

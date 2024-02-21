@@ -6,8 +6,8 @@ The implementation of the thread `Manager` need change after interrupts are enab
 
 After interrupts are turned on, timer interrupts could happen at any time. Interrupts happen in some critical sections may cause unexpected behaviors. For example, the `schedule` method will modify the global `Manager`'s states. We clearly do not want be interrupted when the kernel is changing those states (e.g. in `Manager.schedule()`). Therefore, we could disable the interrupt before the critical section, and restore the interrupt setting when the thread is scheduled again:
 
+File: src/thread/manager.rs
 ```Rust
-// src/kernel/thread/manager.rs
 impl Manager {
     pub fn schedule(&self) {
         let old = interrupt::set(false);
@@ -22,8 +22,8 @@ impl Manager {
 
 All threads should enable interrupt before entering:
 
+File: src/thread/imp.rs
 ```Rust
-// src/kernel/thread/imp.rs
 #[no_mangle]
 extern "C" fn kernel_thread(main: *mut Box<dyn FnOnce()>) -> ! {
     interrupt::set(true);
@@ -57,8 +57,8 @@ pub fn wake_up(thread: Arc<Thread>) {
 
 With `block` and `wake_up`, `Semaphore` could be implemented in this way:
 
+File: src/sync/sema.rs
 ```Rust
-// src/kernel/sync/sema.rs
 pub struct Semaphore {
     value: Cell<usize>,
     waiters: RefCell<VecDeque<Arc<Thread>>>,
@@ -130,8 +130,8 @@ pub trait Lock: Default + Sync + 'static {
 
 There are three different ways to implement this trait, the first (and the simplest) way is to change the interrupt status. The `Intr` struct implements the `Lock` trait:
 
+File: src/sync/intr.rs
 ```Rust
-// src/kernel/sync/intr.rs
 #[derive(Debug, Default)]
 pub struct Intr(Cell<Option<bool>>);
 
@@ -164,6 +164,7 @@ unsafe impl Sync for Intr {}
 
 The `Spin` struct shows a spinlock implementation. Since `AtomicBool` is `Sync` and `Send`, it could be automatically derived:
 
+File: src/sync/spin.rs
 ```Rust
 #[derive(Debug, Default)]
 pub struct Spin(AtomicBool);
@@ -189,6 +190,7 @@ impl Lock for Spin {
 
 We could also let the waiters block. In fact, we could just reuse `Semaphore`:
 
+File: src/sync/sleep.rs
 ```Rust
 #[derive(Clone)]
 pub struct Sleep {
@@ -218,8 +220,8 @@ unsafe impl Sync for Sleep {}
 
 Based on `Lock`s, build a `Mutex` is easy. A `Mutex` contains the real data (encapsuled in a cell to gain innter mutability), and a lock. The `lock` method acquires the lock and returns the `MutexGuard`. The `MutexGuard` is a smart pointer, and could be auto-dereferenced to data's type. On drop, the `MutexGuard` releases the lock:
 
+File: src/sync/mutex.rs
 ```Rust
-// src/kernel/sync/mutex.rs
 #[derive(Debug, Default)]
 pub struct Mutex<T, L: Lock = sync::Primitive> {
     value: UnsafeCell<T>,
@@ -281,8 +283,8 @@ impl<T, L: Lock> Drop for MutexGuard<'_, T, L> {
 
 Rust std crate provides an implementation of conditional variable. Following implementation is heavily influenced by the std version:
 
+File: src/sync/condvar.rs
 ```Rust
-// src/kernel/sync/condvar.rs
 pub struct Condvar(RefCell<VecDeque<Arc<Semaphore>>>);
 
 unsafe impl Sync for Condvar {}
@@ -317,6 +319,7 @@ impl Condvar {
 
 A tricky part is that we need to release and re-acquire the lock when we are using it to wait for a condition. The `wait` method takes a `MutexGuard` as the argument. Therefore, we implement `release` and `acquire` for `MutexGuard`:
 
+File: src/sync/mutex.rs
 ```Rust
 // Useful in Condvar
 impl<T, L: Lock> MutexGuard<'_, T, L> {
@@ -336,8 +339,8 @@ Rust discourages mutable global variables -- they are naturally referenced by mu
 
 We used `Manager::get()` to access the singleton in this chapter, and we didn't discuss the implementation in previous sections, because the implementation of `get` used `Lazy` to lazily initialize the static variable. We take the current running thread as the "Initial" thread, create the idle thread, and build the global `TMANAGER`:
 
+File: src/thread/manager.rs
 ```Rust
-// src/kernel/thread/manager.rs
 impl Manager {
     pub fn get() -> &'static Self {
         static TMANAGER: Lazy<Manager> = Lazy::new(|| {

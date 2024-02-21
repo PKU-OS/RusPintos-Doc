@@ -22,8 +22,8 @@ Running a thread has not yet been supported! We will discuss running a thread la
 
 As mentioned in the previous part, the context of a kernel thread contains *address spaces*, *stack*, *PC*, and *registers*. To create a kernel thread, we must build a set of context. Address spaces are decided by the pagetable. Fortunately, kernel threads share the same address space, which means we do not need to create a new one. But for other parts of the context, we have to build datastructures to maintain them. We will discuss `Thread` struct first.
 
+File: src/thread/imp.rs
 ```Rust
-// src/kernel/thread/imp.rs
 #[repr(C)]
 pub struct Thread {
     tid: isize,
@@ -65,8 +65,8 @@ impl Thread {
 
 To execute a task, a thread may allocate variables on stack, or call other functions. Either operation needs a runtime stack. As you may have remembered, in the [Hello World](../1-HELLOWORLD.md) section we manually allocated the stack for the first function in `src/main.rs`. After page allocator is ready, we are free to allocate dynamic memory and use it as a stack. In Tacos, we alloc 16KB for a thread stack(luxury!). Following code shows the allocation of stack:
 
+File: src/thread.rs
 ```Rust
-// src/kernel/thread.rs
 pub fn spawn<F>(name: &'static str, f: F) -> Arc<Thread>
 where
     F: FnOnce() + Send + 'static,
@@ -86,8 +86,8 @@ We record that stack in `Thread` and use `kfree` to deallocate the stack as the 
 
 Each thread holds a set of general purpose registers. In `riscv`, they are `x0~x31` (checkout this [link](https://five-embeddev.com/quickref/regs_abi.html) for more details). As we create a new thread in Tacos, we should set the initial value of `x0~x31`. When we are switching to another thread (we will cover the details in the next section), those values should also be saved properly. We use `Context` struct to represent recorded registers:
 
+File: src/thread/imp.rs
 ```Rust
-// src/kernel/thread/imp.rs
 /// Records a thread's running status when it switches to another thread,
 /// and when switching back, restore its status from the context.
 #[repr(C)]
@@ -125,8 +125,8 @@ You may want to ask: in the `Context` struct, only 1 + 1 + 12 = 14 registers are
 
 We have already allocated spaces for a thread's execution, now it is time to give it a task. The `spawn` accepts a closure, which is the main funtion of another thread, and belongs to the thread. Therefore, we must support *inter-thread communication* and pass the closure to another thread. Remember that kernel threads shares the same address space -- which means we could simply put the closure on the heap, and read it from another thread. Following code shows how we store it on the heap:
 
+File: src/thread.rs
 ```Rust
-// src/kernel/thread.rs
 pub fn spawn<F>(name: &'static str, f: F) -> Arc<Thread>
 where
     F: FnOnce() + Send + 'static,
@@ -144,8 +144,8 @@ Just to remind you, the `entry` passed to `Thread::new` will be passed to the `C
 
 In order to read the closure in another thread, we wrote two functions: `kernel_thread_entry` and `kernel_thread`:
 
+File: src/thread/imp.rs
 ```Rust
-// src/kernel/thread/imp.rs
 global_asm! {r#"
     .section .text
         .globl kernel_thread_entry
@@ -170,8 +170,8 @@ extern "C" fn kernel_thread(main: *mut Box<dyn FnOnce()>) -> ! {
 
 The kernel maintains a table of active threads. When a thread is created, the thread is added to the table. When a thread exits, the thread is removed from the table. In Tacos, we use `Manager` struct as that table. You can think of it as a singleton.
 
+File: src/thread/manager.rs
 ```Rust
-// src/kernel/thread/manager.rs
 pub struct Manager {
     /// All alive and not yet destroyed threads
     all: Mutex<VecDeque<Arc<Thread>>>,
@@ -197,8 +197,8 @@ impl Manager {
 
 The `spawn` function should register the thread to the `Manager`.
 
+File: src/thread.rs
 ```Rust
-// src/kernel/thread.rs
 pub fn spawn<F>(name: &'static str, f: F) -> Arc<Thread>
 where
     F: FnOnce() + Send + 'static,
