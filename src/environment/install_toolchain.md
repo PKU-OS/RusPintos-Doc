@@ -30,8 +30,8 @@ The next step is to clone the Tacos repository:
 
 ```bash
 cd /somewhere/you/like
-git clone <link>
-cd tacos
+git clone https://github.com/PKU-OS/Tacos.git
+cd Tacos
 ```
 
 Run `ls` under the Tacos root folder, you will see following output:
@@ -55,7 +55,7 @@ After entered the dev container, open a shell and use following command to build
 make
 ```
 
-`make` will build `disk.img` under `build/` directory, which is used as the hard disk of Tacos. Then, you are able to run Tacos with:
+`make` builds `disk.img` under `build/` directory, which will be used as the hard disk of Tacos. Then, you are able to run Tacos with:
 
 ```shell
 cargo run
