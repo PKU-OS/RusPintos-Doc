@@ -11,7 +11,7 @@ File: src/main.rs
 core::arch::global_asm! {r#"
     .section .text
 
-    globl _start
+    .globl _start
     _start:
         li sp, 0x80400000
         j main
