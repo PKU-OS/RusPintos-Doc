@@ -7,7 +7,25 @@
 ## Design Document
 
 <!-- todo: tweak the old design document? -->
-Download the [design document template](https://github.com/PKU-OS/Tacos/blob/main/doc/lab2md) of project 2. Read through questions in the document for motivations, and fill it in afterwards.
+Download the [design document template](https://github.com/PKU-OS/Tacos/blob/main/doc/lab2.md) of project 2. Read through questions in the document for motivations, and fill it in afterwards.
+
+## Argument Passing
+
+Currently, the `fn execute(mut file: File, argv: Vec<String>)` does not pass arguments to new processes. You need to implement it in this task.
+
+* Currently the `argv` argument is not used. To implement this functionality, you need to __pass the `argv` to the user program__.
+* The kernel must put the arguments for the initial function on the __stack__ to allow the user program to assess it. The user program will access the arguments following the normal calling convention (see [RISC-V calling convention](https://riscv.org/wp-content/uploads/2015/01/riscv-calling.pdf)).
+* You can impose a reasonable limit on the length of the command line arguments. For example, you could limit the arguments to those that will __fit in a single page (4 kB)__.
+
+> __Hint__
+>
+> You can parse argument strings any way you like. A viable implementation maybe like:
+>
+> 1. Put `String`s in the `argv` at the top (high address) of the stack. You should terminate those string with `"\0"` when putting them on the stack.
+> 2. Push the address of each string (i.e. the contents of user `argv[]`) on the stack. Those values are pointers, you should align them to 8 bytes to ensure fast access. Don't forget that `argv[]` ends with a `NULL`. 
+> 3. Prepare the argument `argc` and `argv`, and then deliver them to the user program. They are the first and second arguments of `main`.
+>
+> Here is an [argument passing example](https://pkuflyingpig.gitbook.io/pintos/project-description/lab2-user-programs/background#argument-passing) in 80x86 provided by Pintos. Use the example to help you understand how to set up the stack.
 
 ## Process Control Syscalls
 
@@ -63,11 +81,6 @@ Runs the executable whose path is given in `pathname`, passing any given argumen
 > `exec` is the first syscall where a user passes a pointer to the kernel. Be careful and check if the pointer is valid. You may look up the page table to see if the pointer lays in a valid virtual memory region. Also, do make sure that each character within a string has a valid address. Don't just check the first address.
 > 
 > With any invalid arguments, it's just fine to return -1. As for other syscalls with pointer arguments, please always check the validity of their memory addresses.
-
-> __Tip: Argument Passing__
->
-> To pass arguments to users, the kernel usually puts these arguments on the user's initial stack. Start from the stack top, there lies all arguments and their order doesn't matter as they are referred by pointers. Then, there are pointers in the `argv[]` array. Don't forget that `argv[]` ends with a `NULL`.
-Also, riscv sp must be 16-byte aligned.
 
 ### wait
 
@@ -179,7 +192,7 @@ Fills the `buf` with the statistic of the open file `fd`. Returns -1 if fd does 
 ### close
 
 ```C
-void close (int fd)
+int close (int fd);
 ```
 
 Closes file descriptor `fd`. Exiting or terminating a process must implicitly close all its open file descriptors, as if by calling this function for each one. If the operation is unsuccessful, it returns -1.

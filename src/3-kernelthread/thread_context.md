@@ -115,7 +115,7 @@ impl Context {
 }
 ```
 
-Let we skip the `kernel_thread_entry` and the argument `entry` for a while -- and focus on the fields of `Context` struct. The `sp` stores the stack pointer, the `ra` stores the return address, and the `s` array stores the callee saved registers in `riscv`, named `s0~s11` (In `riscv`, a register could be referenced by its alias. For example, `sp` is the alias of `x2`).
+Let's skip the `kernel_thread_entry` and the argument `entry` for a while -- and focus on the fields of `Context` struct. The `sp` stores the stack pointer, the `ra` stores the return address, and the `s` array stores the callee saved registers in `riscv`, named `s0~s11` (In `riscv`, a register could be referenced by its alias. For example, `sp` is the alias of `x2`).
 
 In the `Thread` struct, the type of the `context` field is `Mutex<Context>`, however the type `stack`, `name` and `tid` are just basic types. Why? That is because `stack`, `name` and `tid` is immutable after a `Thread` struct is constructed, they remains unchanged until it drops. But the `context` field is mutable, and we do need to change it when we are switching to another thread. `Mutex` is added to obtain *innter mutability* and we will implement it later (The interface is like `std::Mutex`). You will get a better understanding after we covered the context switching part.
 
