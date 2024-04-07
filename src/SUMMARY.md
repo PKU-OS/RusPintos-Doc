@@ -71,6 +71,10 @@
 
 - [Lab3: Virtual Memory](lab3-virtual_memory.md)
 
+  - [Tasks](lab3-virtual_memory/tasks.md)
+
+  - [Testing](lab3-virtual_memory/testing.md)
+
 # APPENDIX
 
 - [Testing](appendix/testing.md)

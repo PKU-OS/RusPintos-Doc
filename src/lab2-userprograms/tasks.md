@@ -79,7 +79,7 @@ Runs the executable whose path is given in `pathname`, passing any given argumen
 > __Tip: Access User Memory Space__
 >
 > `exec` is the first syscall where a user passes a pointer to the kernel. Be careful and check if the pointer is valid. You may look up the page table to see if the pointer lays in a valid virtual memory region. Also, do make sure that each character within a string has a valid address. Don't just check the first address.
-> 
+>
 > With any invalid arguments, it's just fine to return -1. As for other syscalls with pointer arguments, please always check the validity of their memory addresses.
 
 ### wait
@@ -141,9 +141,9 @@ Writes `size` bytes from buffer to the open file with file descriptor `fd`. Retu
 
 File descriptor 1 writes to the console. You can simply use the `kprint` macro which also applys a lock on `Stdout` for you, making sure that output by different processes won't be interleaved on the console.
 
-```admonish tip
-Before you implement syscall `write` for fd 1, many test cases won't work properly.
-```
+> Tips
+>
+> Before you implement syscall `write` for fd 1, many test cases won't work properly.
 
 ### remove
 
@@ -153,9 +153,9 @@ int remove(const char* pathname);
 
 Deletes the file at `pathname`. Returns 0 if successful, -1 otherwise. A file may be removed regardless of whether it is open or closed, and removing an open file does not close it.
 
-```admonish question title="What happens when an open file is removed?"
-You should implement the standard Unix semantics for files. That is, when a file is removed any process which has a file descriptor for that file may continue to use that descriptor. This means that they can read and write from the file. The file will not have a name, and no other processes will be able to open it, but it will continue to exist until all file descriptors referring to the file are closed or the machine shuts down.
-```
+> **What happens when an open file is removed?**
+>
+> You should implement the standard Unix semantics for files. That is, when a file is removed any process which has a file descriptor for that file may continue to use that descriptor. This means that they can read and write from the file. The file will not have a name, and no other processes will be able to open it, but it will continue to exist until all file descriptors referring to the file are closed or the machine shuts down.
 
 ### seek
 
