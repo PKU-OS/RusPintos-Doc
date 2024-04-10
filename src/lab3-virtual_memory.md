@@ -12,8 +12,8 @@
 >
 > * Submit your design document as a PDF to the `Tacos Lab3: Design Doc Assignment` on [PKU course website](https://course.pku.edu.cn/)
 
-By now you have already touched almost every modules in Tacos. Tacos's thread module supports multiple threads of execution, and a thread could potentially become a process and execute any user programs. Syscalls, as the interface between user and OS, allow user programs to perform I/O or wait for other workers. However, current Tacos implementation cannot fully utilize the machine -- for example, the user stack size is limited to 4KiB.
+By now you have already touched almost every modules in Tacos. Tacos's thread module supports multiple threads of execution, and a thread could potentially be a process and execute any user programs. Syscalls, as the interface between user and OS, allow user programs to perform I/O or wait for other workers. However, it cannot fully utilize the machine -- for example, the user stack size is limited to 4KiB.
 
 In this assignment, you will extend Tacos's virtual memory module. This assignment is **extremely challenging**, you will spend tons of time dealing with complex concurrency problems. You will extend the functionality of `mem/` module, but you also need to modify things under other subdirectories, such as the page fault handler, to support your design.
 
-You are **required** to start your lab3 implementation from a working lab2 implementation. To get a full score, you will need to pass most of tests in lab2 and all the tests in lab3. See the [testing](lab3-virtual_memory/testing.md) page for details.
+You are **required** to start your lab3 implementation from a working lab2 implementation. To get a full score, you will need to pass all the tests in lab2 and lab3. See the [testing](lab3-virtual_memory/testing.md) page for details.
