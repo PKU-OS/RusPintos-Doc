@@ -141,7 +141,7 @@ Writes `size` bytes from buffer to the open file with file descriptor `fd`. Retu
 
 File descriptor 1 writes to the console. You can simply use the `kprint` macro which also applys a lock on `Stdout` for you, making sure that output by different processes won't be interleaved on the console.
 
-> Tips
+> **Tip**
 >
 > Before you implement syscall `write` for fd 1, many test cases won't work properly.
 
