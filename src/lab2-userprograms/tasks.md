@@ -139,7 +139,7 @@ int write(int fd, const void* buffer, unsigned size);
 
 Writes `size` bytes from buffer to the open file with file descriptor `fd`. Returns the number of bytes actually written. Returns -1 if fd does not correspond to an entry in the file descriptor table. Writing past end-of-file would normally extend the file, and file growth is implemented by the basic file system.
 
-File descriptor 1 writes to the console. You can simply use the `kprint` macro which also applys a lock on `Stdout` for you, making sure that output by different processes won't be interleaved on the console.
+File descriptor 1 and 2 should write to the console. You can simply use the `kprint` macro which also applys a lock on `Stdout` for you, making sure that output by different processes won't be interleaved on the console.
 
 > **Tip**
 >
