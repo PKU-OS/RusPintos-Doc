@@ -2,13 +2,13 @@
 
 > __Deadline & Submission__
 >
-> __Code Due__: Thursday 02/29 11:59pm
+> __Code Due__: Thursday 02/27 11:59pm
 >
 > * Use `make submission` to tarball and compress your code as `submission.tar.bz2`
 > * Change the name of submission.tar.bz2 to `submission_yourStudentID.tar.bz2`, e.g., `submission_20000xxxxx.tar.bz2`
 > * Submit this file to the `Tacos Lab0: Appetizer` on [PKU course website](https://course.pku.edu.cn/)
 >
-> __Design Doc Due__: Sunday 03/03 11:59pm
+> __Design Doc Due__: Sunday 03/02 11:59pm
 >
 > * Submit your design document as a PDF to the `Tacos Lab0: Design Doc Assignment` on [PKU course website](https://course.pku.edu.cn/)
 
