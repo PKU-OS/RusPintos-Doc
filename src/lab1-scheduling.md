@@ -6,11 +6,11 @@
 >
 > * Use `make submission` to tarball and compress your code as `submission.tar.bz2`
 > * Change the name of submission.tar.bz2 to `submission_yourStudentID.tar.bz2`, e.g., `submission_20000xxxxx.tar.bz2`
-> * Submit this file to the `Tacos Lab1: Scheduling` on [PKU course website](https://course.pku.edu.cn/)
+> * Submit this file to the `Lab1: Threads` on [PKU course website](https://course.pku.edu.cn/)
 >
 > __Design Doc Due__: Sunday 03/23 11:59pm
 >
-> * Submit your design document as a PDF to the `Tacos Lab1: Design Doc Assignment` on [PKU course website](https://course.pku.edu.cn/)
+> * Submit your design document as a PDF to the `Lab1: Design Doc` on [PKU course website](https://course.pku.edu.cn/)
 
 In this assignment, we give you a minimally functional thread system. Your job is to extend the functionality of this system to support priority scheduling. You will gain a better understanding of synchronization problems after finishing this project.
 

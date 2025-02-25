@@ -6,11 +6,11 @@
 >
 > * Use `make submission` to tarball and compress your code as `submission.tar.bz2`
 > * Change the name of submission.tar.bz2 to `submission_yourStudentID.tar.bz2`, e.g., `submission_20000xxxxx.tar.bz2`
-> * Submit this file to the `Tacos Lab2: User Programs` on [PKU course website](https://course.pku.edu.cn/)
+> * Submit this file to the `Lab2: User Programs` on [PKU course website](https://course.pku.edu.cn/)
 >
 > __Design Doc Due__: Sunday 04/13 11:59pm
 >
-> * Submit your design document as a PDF to the `Tacos Lab2: Design Doc Assignment` on [PKU course website](https://course.pku.edu.cn/)
+> * Submit your design document as a PDF to the `Lab2: Design Doc` on [PKU course website](https://course.pku.edu.cn/)
 
 
 Welcome to Project User Programs! You've built great threading features into TacOS. Seriously, that's some great work. This project will have you implement essential syscalls, supporting user programs to run properly on TacOS.

@@ -6,11 +6,11 @@
 >
 > * Use `make submission` to tarball and compress your code as `submission.tar.bz2`
 > * Change the name of submission.tar.bz2 to `submission_yourStudentID.tar.bz2`, e.g., `submission_20000xxxxx.tar.bz2`
-> * Submit this file to the `Tacos Lab3: Virtual Memory` on [PKU course website](https://course.pku.edu.cn/)
+> * Submit this file to the `T-Lab3: Virtual Memory` on [PKU course website](https://course.pku.edu.cn/)
 >
 > __Design Doc Due__: Sunday 06/01 11:59pm
 >
-> * Submit your design document as a PDF to the `Tacos Lab3: Design Doc Assignment` on [PKU course website](https://course.pku.edu.cn/)
+> * Submit your design document as a PDF to the `T-Lab3: Design Doc` on [PKU course website](https://course.pku.edu.cn/)
 
 By now you have already touched almost every modules in Tacos. Tacos's thread module supports multiple threads of execution, and a thread could potentially be a process and execute any user programs. Syscalls, as the interface between user and OS, allow user programs to perform I/O or wait for other workers. However, it cannot fully utilize the machine -- for example, the user stack size is limited to 4KiB.
 
