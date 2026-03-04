@@ -75,7 +75,7 @@ Requirements:
 * When a newline is entered, it parses the input and checks if it is `whoami`. If it is `whoami`, print your student id. Afterward, the monitor will print the command prompt `PKUOS>` again in the next line and repeat.
 * If the user input is `exit`, the monitor will quit to allow the kernel to finish. For other inputs, print invalid command.
 
-> __Hints__
+> __Hint__
 >
 > * The code place for you to add this feature is in `main.rs`:
 >   `// TODO: Lab 0`
