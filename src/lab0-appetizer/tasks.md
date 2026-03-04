@@ -49,7 +49,7 @@ In this section, you will use GDB to trace the QEMU emulation to understand how 
 
 > __Question__
 >
-> * Inside `console_putchar`, Tacos uses the `ecall` instruction to transfer control to SBI. What are the values of registers `a6` and `a7` when executing that `ecall`?
+> * Inside `console_putchar`, Tacos uses the `ecall` instruction to transfer control to SBI. What are the values of register `a6` and register `a7` when executing that `ecall`?
 
 ## Kernel Monitor
 
