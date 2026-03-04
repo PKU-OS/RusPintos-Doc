@@ -142,27 +142,26 @@ Then you are free to follow the running instructions in Option A.
 * To use the pre-built version, run following commands:
 
 ```shell
-docker pull chromi2eugen/tacos
+docker pull crimmypeng/tacos:rust-1.92v3
 ```
 
 This may take a few minutes. If the download goes fine, you will see following output:
 
 ```bash
-user@your_host> docker pull chromi2eugen/tacos
-Using default tag: latest
-latest: Pulling from chromi2eugen/tacos
+user@your_host> docker pull crimmypeng/tacos:rust-1.92v3 
+rust-1.92v3: Pulling from crimmypeng/tacos
 some_hash_value: Pull complete
 ...
 some_hash_value: Pull complete
 Digest: sha256:...
-Status: Downloaded newer image for chromi2eugen/tacos:latest
-docker.io/chromi2eugen/tacos:latest
+Status: Downloaded newer image for crimmypeng/tacos:rust-1.92v3
+docker.io/crimmypeng/tacos:rust-1.92v3
 ```
 
 And then start a container with following commands:
 
 ```shell
-docker run --rm --name <container name> --mount type=bind,source=</absolute/path/to/this/folder/on/your/machine>,target=/workspaces/Tacos -it chromi2eugen/tacos bash
+docker run --rm --name <container name> --mount type=bind,source=</absolute/path/to/this/folder/on/your/machine>,target=/workspaces/Tacos -it crimmypeng/tacos:rust-1.92v3 bash
 cd /workspaces/Tacos
 ```
 
