@@ -144,3 +144,9 @@ cargo bk -n mybk -c args-none,args-many
 The usage and meaning of bookmark tool is quite similar to the test tool. The `-c` is used to add specified cases. The `-b` is used to add all the cases in another bookmark (example: `cargo bk -n mylab2 -b lab2`). The `-p` is used to add the failed test cases in your last run (example: `cargo bk -n failed-in-run-87 -p`).
 
 The tool also provide `-d` for delete mode. For example, if the `args-none` is ensured to be passable, and you do not care about it anymore, you can delete it from `mybk` by running `cargo bk -n mybk -d -c args-none`. This mode can also receive `-b` and `-p`. You may want to keep a backup of your important bookmarks when using this mode!
+
+## Remote test server
+
+Some bugs may perform differently on TA's testing environment. So we add a a remote test server, so that you can submit and check your score in TA's testing environment. You can check the [test script](https://github.com/PKU-OS/Tacos/blob/main/scripts/remote_test.sh) to see how to use the remote test server. And please modify the `SERVER_URL` in [client.py](https://github.com/PKU-OS/Tacos/blob/main/scripts/simple_client.py) with the url provided by TA. 
+
+If you want to know how the server works, please check [this repo](https://github.com/OshinoShinobu-Chan/Tacos-Test-Server).
