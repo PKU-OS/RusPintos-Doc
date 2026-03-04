@@ -6,7 +6,7 @@ Read the [Install toolchain](/environment/install_toolchain.md) section to set u
 
 ## Design Doc
 
-Download the [design document template](https://github.com/PKU-OS/Tacos/blob/main/doc/lab0.md) of project 0. Read through questions in the document to get a feel for the lab before you start, and answer them as you go.
+Download the [design document template](https://github.com/PKU-OS/Tacos/blob/main/doc/lab0.md) of lab 0. Read through questions in the document to get a feel for the lab before you start, and answer them as you go.
 
 ## Booting Tacos
 
