@@ -2,13 +2,13 @@
 
 > __Deadline & Submission__
 >
-> __Code Due__: Thursday 03/20 11:59pm
+> __Code Due__: Thursday 04/02 11:59pm
 >
 > * Use `make submission` to tarball and compress your code as `submission.tar.bz2`
 > * Change the name of submission.tar.bz2 to `submission_yourStudentID.tar.bz2`, e.g., `submission_20000xxxxx.tar.bz2`
 > * Submit this file to the `Lab1: Threads` on [PKU course website](https://course.pku.edu.cn/)
 >
-> __Design Doc Due__: Sunday 03/23 11:59pm
+> __Design Doc Due__: Sunday 04/05 11:59pm
 >
 > * Submit your design document as a PDF to the `Lab1: Design Doc` on [PKU course website](https://course.pku.edu.cn/)
 
