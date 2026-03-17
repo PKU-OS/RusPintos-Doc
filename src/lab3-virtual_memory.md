@@ -2,13 +2,13 @@
 
 > __Deadline & Submission__
 >
-> __Code Due__: Thursday 05/29 11:59pm
+> __Code Due__: Thursday 06/11 11:59pm
 >
 > * Use `make submission` to tarball and compress your code as `submission.tar.bz2`
 > * Change the name of submission.tar.bz2 to `submission_yourStudentID.tar.bz2`, e.g., `submission_20000xxxxx.tar.bz2`
 > * Submit this file to the `T-Lab3: Virtual Memory` on [PKU course website](https://course.pku.edu.cn/)
 >
-> __Design Doc Due__: Sunday 06/01 11:59pm
+> __Design Doc Due__: Sunday 06/14 11:59pm
 >
 > * Submit your design document as a PDF to the `T-Lab3: Design Doc` on [PKU course website](https://course.pku.edu.cn/)
 
