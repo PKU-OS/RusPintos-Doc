@@ -1,5 +1,9 @@
 # Tasks
 
+> __Note__
+>
+> Please synchronize your code base with our remote repository before you start this lab.
+
 ## Design Doc
 
 Download the [design document template](https://github.com/PKU-OS/Tacos/blob/main/doc/lab1.md) of project 1. Read through questions in the document for motivations, and fill it in afterwards.
